@@ -3,7 +3,33 @@ package net.robinsinghdevgan.dataStructures;
 import java.util.Objects;
 
 public class SinglyLinkedList<T> {
-    private class Node<T>{
+    private Node first;
+
+    private int size;
+    private Node last;
+
+    public SinglyLinkedList() {
+        size = 0;
+        first = last = null;
+    }
+
+    public boolean add(T data) {
+        Node newElement;
+        try {
+            newElement = new Node(data);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        if (last != null) {
+            last.next = newElement;
+        } else {
+            first = last = newElement;
+        }
+        return true;
+    }
+
+    private class Node {
         private T data;
         private Node next;
 
@@ -34,11 +60,18 @@ public class SinglyLinkedList<T> {
         }
 
         @Override
+        @SuppressWarnings({"unchecked"})
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-            Node<?> node = (Node<?>) o;
-            return getData().equals(node.getData());
+            Node node;
+            try {
+                node = (Node) o;
+                return getData().equals(node.getData());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                return false;
+            }
         }
 
         @Override
@@ -54,15 +87,5 @@ public class SinglyLinkedList<T> {
             this.next = next;
         }
     }
-
-    private int size;
-    private Node<T> first;
-    private Node<T> last;
-
-    public SinglyLinkedList() {
-        size = 0;
-        first = last = null;
-    }
-
 
 }
