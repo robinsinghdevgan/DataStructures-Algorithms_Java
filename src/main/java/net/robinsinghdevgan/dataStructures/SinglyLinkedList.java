@@ -1,8 +1,8 @@
 package net.robinsinghdevgan.dataStructures;
 
-import java.util.Objects;
+import java.util.*;
 
-public class SinglyLinkedList<T> {
+public class SinglyLinkedList<T> implements List<T> {
     private Node first;
 
     private int size;
@@ -13,6 +13,57 @@ public class SinglyLinkedList<T> {
         first = last = null;
     }
 
+    @Override
+    public int size() {
+        return size;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    @Override
+    public boolean contains(Object o) {
+        Node n = (Node) o;
+        Node iterator = first;
+        while (iterator.hasNext()) {
+            if (n == iterator)
+                return true;
+            iterator = iterator.getNext();
+        }
+        return false;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return null;
+    }
+
+    @Override
+    public Object[] toArray() {
+        Object[] array = new Object[size];
+        int index = 0;
+        Node iterator = first;
+        while (iterator.hasNext()) {
+            array[index++] = iterator.getData();
+            iterator = iterator.getNext();
+        }
+        return array;
+    }
+
+    @Override
+    public <T> T[] toArray(T[] array) {
+        int index = 0;
+        Node iterator = first;
+        while (iterator.hasNext()) {
+            array[index++] = (T) iterator.getData();
+            iterator = iterator.next();
+        }
+        return array;
+    }
+
+    @Override
     public boolean add(T data) {
         Node newElement;
         try {
@@ -29,7 +80,100 @@ public class SinglyLinkedList<T> {
         return true;
     }
 
-    private class Node {
+    @Override
+    public boolean remove(Object o) {
+        Node n;
+        try {
+            n = (Node) o;
+            Node iterator = first;
+            while (iterator.hasNext() && iterator.next() != n) {
+                iterator = iterator.getNext();
+            }
+            if (iterator().hasNext())
+                iterator.setNext(iterator.getNext().getNext());
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean containsAll(Collection<?> collection) {
+        return false;
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends T> collection) {
+        return false;
+    }
+
+    @Override
+    public boolean addAll(int i, Collection<? extends T> collection) {
+        return false;
+    }
+
+    @Override
+    public boolean removeAll(Collection<?> collection) {
+        return false;
+    }
+
+    @Override
+    public boolean retainAll(Collection<?> collection) {
+        return false;
+    }
+
+    @Override
+    public void clear() {
+
+    }
+
+    @Override
+    public T get(int i) {
+        return null;
+    }
+
+    @Override
+    public T set(int i, T t) {
+        return null;
+    }
+
+    @Override
+    public void add(int i, T t) {
+
+    }
+
+    @Override
+    public T remove(int i) {
+        return null;
+    }
+
+    @Override
+    public int indexOf(Object o) {
+        return 0;
+    }
+
+    @Override
+    public int lastIndexOf(Object o) {
+        return 0;
+    }
+
+    @Override
+    public ListIterator<T> listIterator() {
+        return null;
+    }
+
+    @Override
+    public ListIterator<T> listIterator(int i) {
+        return null;
+    }
+
+    @Override
+    public List<T> subList(int i, int i1) {
+        return null;
+    }
+
+    private class Node implements Iterator<Node> {
         private T data;
         private Node next;
 
@@ -85,6 +229,16 @@ public class SinglyLinkedList<T> {
 
         public void setNext(Node next) {
             this.next = next;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return getNext() != null;
+        }
+
+        @Override
+        public Node next() {
+            return next;
         }
     }
 
