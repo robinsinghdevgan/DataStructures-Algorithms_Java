@@ -64,6 +64,17 @@ public class SinglyLinkedList<T> implements List<T> {
     }
 
     @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        Node iterator = first;
+        while (iterator.hasNext()) {
+            sb.append(iterator.getData().toString() + " => ");
+            iterator = iterator.next();
+        }
+        return sb.toString();
+    }
+
+    @Override
     public boolean add(T data) {
         Node newElement;
         try {
@@ -74,9 +85,11 @@ public class SinglyLinkedList<T> implements List<T> {
         }
         if (last != null) {
             last.next = newElement;
+            last = newElement;
         } else {
             first = last = newElement;
         }
+        ++size;
         return true;
     }
 
@@ -130,7 +143,18 @@ public class SinglyLinkedList<T> implements List<T> {
 
     @Override
     public T get(int i) {
-        return null;
+        if(size() <= i) {
+            throw new IndexOutOfBoundsException("Supplied index is out of bounds.");
+        }
+        int index = 0;
+        Node iterator = first;
+        T res = null;
+        while (iterator != null) {
+            if(index++ == i)
+                res = iterator.data;
+            iterator = iterator.next();
+        }
+        return res;
     }
 
     @Override
