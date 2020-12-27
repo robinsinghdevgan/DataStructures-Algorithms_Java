@@ -147,17 +147,17 @@ public class SinglyLinkedList<E> implements List<E> {
 
         @Override
         public boolean hasPrevious() {
-            if(lastReturned == first)
+            if (lastReturned == first)
                 return false;
             return true;
         }
 
         @Override
         public E previous() {
-            if(lastReturned == first)
+            if (lastReturned == first)
                 return null;
             var prev = first;
-            while(prev.next != lastReturned){
+            while (prev.next != lastReturned) {
                 prev = prev.next;
             }
             lastReturned = prev;
@@ -240,7 +240,7 @@ public class SinglyLinkedList<E> implements List<E> {
     public boolean contains(Object o) {
         @SuppressWarnings({ "unchecked" }) Node<E> n = (Node<E>) o;
         Node<E> iterator = first;
-        while (iterator.hasNext()) {
+        while (iterator != null) {
             if (n == iterator)
                 return true;
             iterator = iterator.getNext();
@@ -300,11 +300,12 @@ public class SinglyLinkedList<E> implements List<E> {
 
     @Override
     public int indexOf(Object o) {
-        @SuppressWarnings({ "unchecked" }) Node<E> n = (Node<E>) o;
+        @SuppressWarnings({ "unchecked" })
+        Node<E> n = (Node<E>) o;
         int idx = 0;
         Node<E> iterator = first;
         boolean found = false;
-        while (iterator.hasNext()) {
+        while (iterator != null) {
             if (n == iterator) {
                 found = true;
                 break;
@@ -326,12 +327,12 @@ public class SinglyLinkedList<E> implements List<E> {
     }
 
     @Override
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings({ "unchecked" })
     public int lastIndexOf(Object o) {
         var n = first;
         int i = 0, res = -1;
-        while(n != null){
-            if(n == (Node<E>) o)
+        while (n != null) {
+            if (n == (Node<E>) o)
                 res = i;
             ++i;
         }
@@ -351,12 +352,11 @@ public class SinglyLinkedList<E> implements List<E> {
     @Override
     public E remove(int i) throws IndexOutOfBoundsException {
         if (i == 0) {
-            if (first != null && first.hasNext()){
+            if (first != null && first.hasNext()) {
                 E currValue = first.getData();
                 first = first.getNext();
                 return currValue;
-            }
-            else
+            } else
                 return null;
         } else if (i == size() - 1) {
             Node<E> iter = first;
@@ -398,7 +398,7 @@ public class SinglyLinkedList<E> implements List<E> {
     @Override
     public boolean removeAll(Collection<?> collection) {
         for (Object object : collection) {
-            if(this.remove(object) == false)
+            if (this.remove(object) == false)
                 return false;
         }
         return true;
@@ -408,7 +408,7 @@ public class SinglyLinkedList<E> implements List<E> {
     public boolean retainAll(Collection<?> collection) {
         boolean listChanged = false;
         for (Object object : collection) {
-            if(this.contains(object) == false){
+            if (this.contains(object) == false) {
                 this.remove(object);
                 listChanged = true;
             }
@@ -445,7 +445,7 @@ public class SinglyLinkedList<E> implements List<E> {
         Object[] array = new Object[size];
         int index = 0;
         Node<E> iterator = first;
-        while (iterator.hasNext()) {
+        while (iterator != null) {
             array[index++] = iterator.getData();
             iterator = iterator.getNext();
         }
@@ -454,10 +454,9 @@ public class SinglyLinkedList<E> implements List<E> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> T[] toArray(T[] a)  {
+    public <T> T[] toArray(T[] a) {
         if (a.length < size)
-            a = (T[])java.lang.reflect.Array.newInstance(
-                                a.getClass().getComponentType(), size);
+            a = (T[]) java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
         int i = 0;
         Object[] result = a;
         for (Node<E> x = first; x != null; x = x.next)
@@ -480,15 +479,15 @@ public class SinglyLinkedList<E> implements List<E> {
         return sb.toString();
     }
 
-        /**
+    /**
      * Unlinks non-null node x.
      */
     E unlink(Node<E> x) {
-        
+
         final E element = x.data;
         final Node<E> next = x.next;
 
-        if(x == first){
+        if (x == first) {
             first = first.next;
             x = null;
             size--;
@@ -497,7 +496,7 @@ public class SinglyLinkedList<E> implements List<E> {
 
         var iter = first;
 
-        while(iter.next != x) {
+        while (iter.next != x) {
             iter = iter.next();
         }
         iter.setNext(next);
