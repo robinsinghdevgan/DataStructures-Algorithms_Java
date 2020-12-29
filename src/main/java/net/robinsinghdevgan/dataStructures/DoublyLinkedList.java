@@ -145,14 +145,38 @@ public class DoublyLinkedList<E> implements List<E> {
     
     @Override
     public boolean add(E e) {
-        // TODO Auto-generated method stub
-        return false;
+        Node<E> newNode;
+        try {
+            newNode = new Node<E>(e);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        if (first == null){
+            first = last = newNode;
+        }else{
+            last.next = newNode;
+            newNode.prev = last;
+            last = newNode;
+        }
+        return true;
     }
 
     @Override
     public void add(int index, E element) {
-        // TODO Auto-generated method stub
-
+        if(index < 0 || index >= size)
+            throw new IllegalArgumentException("Index out of bounds");
+        if(index == 0){
+            linkFirst(element);
+        }else if(index == size - 1){
+            linkLast(element);
+        }
+        var iter = first;
+        for(int i = 0; i < index; i++){
+            iter = iter.next;
+        }
+        //iter at one node ahead to index
+        linkBefore(element, iter);
     }
 
     @Override
