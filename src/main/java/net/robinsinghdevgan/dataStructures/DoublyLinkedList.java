@@ -181,14 +181,26 @@ public class DoublyLinkedList<E> implements List<E> {
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
-        // TODO Auto-generated method stub
-        return false;
+        try {  
+            for(E object : c){
+                linkLast(object);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return true;
     }
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
-        // TODO Auto-generated method stub
-        return false;
+        try {
+            for(E object : c){
+                add(index++, object);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return true;
     }
     
     @Override
@@ -211,19 +223,25 @@ public class DoublyLinkedList<E> implements List<E> {
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        // TODO Auto-generated method stub
-        return false;
+        for(Object object : c){
+            if(!contains(object))
+                return false;
+        }
+        return true;
     }
 
     @Override
     public E get(int index) {
-        // TODO Auto-generated method stub
-        return null;
+        if(index < 0 || index >= size)
+            return null;
+        var iter = first;
+        for(int i = 0; i < index; i++){
+            iter = iter.next;
+        }
+        return iter.data;
     }
 
     Node<E> getNode(int index) {
-        // assert isElementIndex(index);
-
         if (index < (size >> 1)) {
             Node<E> x = first;
             for (int i = 0; i < index; i++)
@@ -238,9 +256,15 @@ public class DoublyLinkedList<E> implements List<E> {
     }
 
     @Override
+    @SuppressWarnings({ "unchecked" })
     public int indexOf(Object o) {
-        // TODO Auto-generated method stub
-        return 0;
+        var iter = first;
+        for(int i = 0; i < size; i++){
+            if(iter == (Node<E>) o)
+                return i;
+            iter = iter.next;
+        }
+        return -1;
     }
 
     @Override
@@ -254,9 +278,15 @@ public class DoublyLinkedList<E> implements List<E> {
     }
 
     @Override
+    @SuppressWarnings({ "unchecked" })
     public int lastIndexOf(Object o) {
-        // TODO Auto-generated method stub
-        return 0;
+        var iter = last;
+        for(int i = size-1; i >= 0; i--){
+            if(iter == (Node<E>) o)
+                return i;
+            iter = iter.prev;
+        }
+        return -1;
     }
 
     /**
@@ -314,20 +344,36 @@ public class DoublyLinkedList<E> implements List<E> {
 
     @Override
     public E remove(int index) {
-        // TODO Auto-generated method stub
-        return null;
+        var iter = first;
+        for(int i = 0; i < index; i++){
+            iter = iter.next;
+        }
+        var result = iter.data;
+        unlink(iter);
+        return result;
     }
 
     @Override
+    @SuppressWarnings({ "unchecked" })
     public boolean remove(Object o) {
-        // TODO Auto-generated method stub
+        var iter = first;
+        for(int i = 0; i < size; i++){
+            if(iter == (Node<E>) o){
+                unlink(iter);
+                return true;
+            }
+            iter = iter.next;
+        }
         return false;
     }
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        // TODO Auto-generated method stub
-        return false;
+        for(Object object : c){
+            if(!remove(object))
+                return false;
+        }
+        return true;
     }
 
     protected void removeRange(int fromIndex, int toIndex) {
@@ -340,8 +386,11 @@ public class DoublyLinkedList<E> implements List<E> {
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        // TODO Auto-generated method stub
-        return false;
+        var iter = first;
+        for(int i = 0; i < size; i++){
+            // TODO Auto-generated method stub
+        }
+        return true;
     }
 
     @Override
