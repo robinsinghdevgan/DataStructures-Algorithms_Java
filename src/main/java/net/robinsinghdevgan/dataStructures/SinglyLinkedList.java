@@ -267,7 +267,7 @@ public class SinglyLinkedList<E> implements List<E> {
         E res = null;
         while (iterator != null) {
             if (index++ == i)
-                res = iterator.data;
+                return iterator.data;
             iterator = iterator.next();
         }
         return res;
