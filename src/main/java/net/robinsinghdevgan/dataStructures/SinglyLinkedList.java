@@ -506,4 +506,11 @@ public class SinglyLinkedList<E> implements List<E> {
         size--;
         return element;
     }
+
+    /**
+     * Unlinks non-null node x.
+     */
+    E unlinkLast() {
+        return unlink(last);
+    }
 }
