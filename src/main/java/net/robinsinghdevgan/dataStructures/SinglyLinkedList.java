@@ -471,11 +471,13 @@ public class SinglyLinkedList<E> implements List<E> {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        sb.append("{");
         Node<E> iterator = first;
-        while (iterator != null) {
-            sb.append(iterator.getData().toString() + " => ");
+        while (iterator.next() != null) {
+            sb.append(iterator.getData().toString() + ",");
             iterator = iterator.next();
         }
+        sb.append(iterator.getData().toString() + "}");
         return sb.toString();
     }
 
