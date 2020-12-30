@@ -233,7 +233,7 @@ public class DoublyLinkedList<E> implements List<E> {
     @Override
     public E get(int index) {
         if(index < 0 || index >= size)
-            return null;
+            throw new IndexOutOfBoundsException();
         var iter = first;
         for(int i = 0; i < index; i++){
             iter = iter.next;
@@ -446,6 +446,18 @@ public class DoublyLinkedList<E> implements List<E> {
             a[size] = null;
 
         return a;
+    }
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        Node<E> iterator = first;
+        while (iterator.next != null) {
+            sb.append(iterator.data.toString() + ",");
+            iterator = iterator.next;
+        }
+        sb.append(iterator.data.toString() + "}");
+        return sb.toString();
     }
 
     /**
