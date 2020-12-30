@@ -386,17 +386,22 @@ public class DoublyLinkedList<E> implements List<E> {
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        var iter = first;
-        for(int i = 0; i < size; i++){
-            // TODO Auto-generated method stub
+        boolean listChanged = false;
+        for (Object object : c) {
+            if (this.contains(object) == false) {
+                this.remove(object);
+                listChanged = true;
+            }
         }
-        return true;
+        return listChanged;
     }
 
     @Override
     public E set(int index, E element) {
-        // TODO Auto-generated method stub
-        return null;
+        Node<E> nodeToSet = getNode(index);
+        E previousValue = nodeToSet.data;
+        nodeToSet.data = element;
+        return previousValue;
     }
 
     @Override
@@ -406,8 +411,13 @@ public class DoublyLinkedList<E> implements List<E> {
 
     @Override
     public List<E> subList(int fromIndex, int toIndex) {
-        // TODO Auto-generated method stub
-        return null;
+        DoublyLinkedList<E> newSubList = new DoublyLinkedList<E>();
+        Node<E> start = this.getNode(fromIndex), end = this.getNode(toIndex);
+        Node<E> iter = start;
+        while (iter != end) {
+            newSubList.add(iter.data);
+        }
+        return newSubList;
     }
 
     @Override
