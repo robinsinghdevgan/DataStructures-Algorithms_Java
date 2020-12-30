@@ -1,4 +1,4 @@
-package net;
+package net.robinsinghdevgan.dataStructures;
 
 import java.util.EmptyStackException;
 
