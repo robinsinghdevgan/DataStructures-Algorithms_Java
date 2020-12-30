@@ -19,6 +19,13 @@ class SinglyLinkedListTest {
     @org.junit.jupiter.api.AfterAll
     void tearDown() {
     }
+
+    @Test
+    void testToString() {
+        SinglyLinkedList<Integer> sll = null;
+        sll = testCollectionToList();
+        System.out.println(sll.toString());
+    }
     
     @org.junit.jupiter.api.Test
     SinglyLinkedList<Integer> testCollectionToList() {
@@ -39,11 +46,11 @@ class SinglyLinkedListTest {
         SinglyLinkedList<Integer> sll = null;
         sll = testCollectionToList();
         sll.remove(0);
-        assertEquals("1 => 2 => 3 => 4 => 5 => 6 => 7 => ", sll.toString());
+        assertEquals("{1,2,3,4,5,6,7}", sll.toString());
         sll.remove(6);
-        assertEquals("1 => 2 => 3 => 4 => 5 => 6 => ", sll.toString());
+        assertEquals("{1,2,3,4,5,6}", sll.toString());
         sll.remove(3);
-        assertEquals("1 => 2 => 3 => 5 => 6 => ", sll.toString());
+        assertEquals("{1,2,3,5,6}", sll.toString());
     }
 
     @org.junit.jupiter.api.Test()
