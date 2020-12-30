@@ -413,7 +413,7 @@ public class SinglyLinkedList<E> implements List<E> {
                 listChanged = true;
             }
         }
-        return listChanged ? true : false;
+        return listChanged;
     }
 
     @Override
