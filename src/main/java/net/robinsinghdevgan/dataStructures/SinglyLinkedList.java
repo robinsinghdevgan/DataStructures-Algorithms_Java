@@ -219,8 +219,8 @@ public class SinglyLinkedList<E> implements List<E> {
         newList.addAll(collection);
         Node<E> ithNode = getNode(i);
         Node<E> nextOfIthNode = ithNode.getNext();
-        ithNode.setNext(newList.getFirst());
-        newList.getLast().setNext(nextOfIthNode);
+        ithNode.setNext(newList.getFirstNode());
+        newList.getLastNode().setNext(nextOfIthNode);
         return false;
     }
 
@@ -238,7 +238,8 @@ public class SinglyLinkedList<E> implements List<E> {
 
     @Override
     public boolean contains(Object o) {
-        @SuppressWarnings({ "unchecked" }) Node<E> n = (Node<E>) o;
+        @SuppressWarnings({ "unchecked" })
+        Node<E> n = (Node<E>) o;
         Node<E> iterator = first;
         while (iterator != null) {
             if (n == iterator)
@@ -273,12 +274,24 @@ public class SinglyLinkedList<E> implements List<E> {
         return res;
     }
 
-    private Node<E> getFirst() {
+    private Node<E> getFirstNode() {
         return first;
     }
 
-    private Node<E> getLast() {
+    private Node<E> getLastNode() {
         return last;
+    }
+
+    public E getFirst() {
+        if (first == null)
+            return null;
+        return first.data;
+    }
+
+    public E getLast() {
+        if (last == null)
+            return null;
+        return last.data;
     }
 
     public Node<E> getNode(int i) throws IndexOutOfBoundsException {
@@ -508,9 +521,28 @@ public class SinglyLinkedList<E> implements List<E> {
     }
 
     /**
-     * Unlinks non-null node x.
+     * Unlinks last node
      */
     E unlinkLast() {
-        return unlink(last);
+        if (last == null)
+            throw new EmptyStackException();
+        if (last == first) {
+            E returnValue = first.getData();
+            last = first = null;
+            return returnValue;
+        } else {
+            var oldLast = this.last;
+            E result = last.getData();
+
+            unlink(oldLast);
+            var iter = first;
+            if (iter != null) {
+                while (iter.next != null) {
+                    iter = iter.next;
+                }
+                last = iter;
+            }
+            return result;
+        }
     }
 }
