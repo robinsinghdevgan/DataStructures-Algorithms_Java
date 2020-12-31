@@ -176,10 +176,18 @@ public class SinglyLinkedList<E> implements List<E> {
 
     @Override
     public void add(int i, E t) {
+        if (i == 0 && first == null) {
+            add(t);
+            return;
+        }
+        if (i < 0 || i >= size)
+            throw new IndexOutOfBoundsException();
+
         var oldNode = this.getNode(i);
         var nextOfOldNode = oldNode.next();
         Node<E> newNode = new Node<E>(t, nextOfOldNode);
         oldNode.setNext(newNode);
+        ++size;
     }
 
     @Override
@@ -544,5 +552,18 @@ public class SinglyLinkedList<E> implements List<E> {
             }
             return result;
         }
+    }
+
+    public E unlinkFirst() {
+        if (first == null)
+            throw new EmptyStackException();
+        E returnValue = first.data;
+        var newFirst = first.next;
+        first = null;
+        --size;
+        first = newFirst;
+        if(first == null)
+            last = null;
+        return returnValue;
     }
 }
