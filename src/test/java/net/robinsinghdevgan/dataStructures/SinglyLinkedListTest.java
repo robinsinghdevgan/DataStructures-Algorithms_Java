@@ -80,5 +80,12 @@ class SinglyLinkedListTest {
             assertEquals(i, sll.getLast());
             sll.unlinkLast();
         }
+        assertEquals(1, sll.getFirst());
+        assertEquals(1, sll.getLast());
+
+        sll.unlinkLast();
+        assertEquals(null, sll.getFirst());
+        assertEquals(null, sll.getLast());
+
     }
 }
