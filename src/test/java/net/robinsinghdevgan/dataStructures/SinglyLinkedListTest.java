@@ -63,4 +63,22 @@ class SinglyLinkedListTest {
         Throwable exception = assertThrows(IndexOutOfBoundsException.class, () -> sll.get(100));
         System.out.println(exception.getMessage());
     }
+
+    @Test
+    void checkFirstAndLast() {
+        SinglyLinkedList<Integer> sll = new SinglyLinkedList<Integer>();
+        sll.add(1);
+        assertEquals(1, sll.getFirst());
+        assertEquals(1, sll.getLast());
+        for(int i=2;i<10;++i){
+            sll.add(i);
+            assertEquals(1, sll.getFirst());
+            assertEquals(i, sll.getLast());
+        }
+        for(int i=9;i>=2;--i){
+            assertEquals(1, sll.getFirst());
+            assertEquals(i, sll.getLast());
+            sll.unlinkLast();
+        }
+    }
 }
