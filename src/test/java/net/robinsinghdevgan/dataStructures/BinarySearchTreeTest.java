@@ -2,8 +2,6 @@ package net.robinsinghdevgan.dataStructures;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
@@ -18,6 +16,19 @@ public class BinarySearchTreeTest {
         }
         assertEquals(tree.size(), arr.length);
         assertEquals(11, tree.height());
-        assertEquals("{-10055,1,2,3,4,5,6,7,8,9,10,88,9999}", tree.inOrderTraversal());
+    }
+
+    @Test
+    public void test2(){
+        int[] arr = { 5, 6, 3, 2, 1, 9999, 88, -10055 };
+        BinarySearchTree<Integer> tree = new BinarySearchTree<Integer>();
+        for (int i = 0; i < arr.length; i++) {
+            tree.add(arr[i]);
+        }
+        assertEquals("{-10055,1,2,3,5,6,88,9999}",tree.inOrderTraversal());
+        assertEquals(true, tree.remove(9999));
+        assertEquals("{-10055,1,2,3,5,6,88}", tree.inOrderTraversal());
+        assertEquals(true, tree.remove(-10055));
+        assertEquals("{1,2,3,5,6,88}", tree.inOrderTraversal());
     }
 }
