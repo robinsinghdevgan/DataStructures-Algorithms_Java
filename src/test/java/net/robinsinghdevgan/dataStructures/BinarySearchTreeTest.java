@@ -16,6 +16,9 @@ public class BinarySearchTreeTest {
         }
         assertEquals(tree.size(), arr.length);
         assertEquals(11, tree.height());
+        System.out.println(tree.toString());
+        tree.balanceTheTree();
+        System.out.println(tree.toString());
     }
 
     @Test
@@ -30,5 +33,7 @@ public class BinarySearchTreeTest {
         assertEquals("{-10055,1,2,3,5,6,88}", tree.inOrderTraversal());
         assertEquals(true, tree.remove(-10055));
         assertEquals("{1,2,3,5,6,88}", tree.inOrderTraversal());
+        tree.balanceTheTree();
+        System.out.println(tree.toString());
     }
 }
