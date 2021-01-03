@@ -1,5 +1,8 @@
 package net.robinsinghdevgan.dataStructures;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BinarySearchTree<E extends Comparable<E>> {
     private class Node {
         Node left, right;
@@ -178,5 +181,78 @@ public class BinarySearchTree<E extends Comparable<E>> {
     // Get the number of nodes in this binary tree
     public int size() {
         return nodeCount;
+    }
+
+    public String toString() {
+        StringBuilder buffer = new StringBuilder(50);
+        printBinaryTree(buffer, root, 0);
+        buffer.append("\n\n");
+        return buffer.toString();
+    }
+
+    public void printBinaryTree(StringBuilder sb, Node root, int level) {
+        if (root == null)
+            return;
+        printBinaryTree(sb, root.right, level + 1);
+        if (level != 0) {
+            for (int i = 0; i < level - 1; i++)
+                sb.append("|\t");
+            sb.append("|-------" + root.data);
+        } else
+            sb.append(root.data);
+        sb.append("\n");
+        printBinaryTree(sb, root.left, level + 1);
+    }
+
+    // below line of code is for balancing the bst
+    /*
+     * This function traverse the skewed binary tree and stores its nodes pointers
+     * in vector nodes[]
+     */
+    void storeBSTNodes(Node root, List<Node> nodes) {
+        // Base case
+        if (root == null)
+            return;
+
+        // Store nodes in Inorder (which is sorted
+        // order for BST)
+        storeBSTNodes(root.left, nodes);
+        nodes.add(root);
+        storeBSTNodes(root.right, nodes);
+    }
+
+    /* Recursive function to construct binary tree */
+    Node buildTreeUtil(List<Node> nodes, int start, int end) {
+        // base case
+        if (start > end)
+            return null;
+
+        /* Get the middle element and make it root */
+        int mid = (start + end) / 2;
+        Node node = nodes.get(mid);
+
+        /*
+         * Using index in Inorder traversal, construct left and right subtress
+         */
+        node.left = buildTreeUtil(nodes, start, mid - 1);
+        node.right = buildTreeUtil(nodes, mid + 1, end);
+
+        return node;
+    }
+
+    // This functions converts an unbalanced BST to
+    // a balanced BST
+    Node buildTree(Node root) {
+        // Store nodes of given BST in sorted order
+        List<Node> nodes = new ArrayList<Node>();
+        storeBSTNodes(root, nodes);
+
+        // Constucts BST from nodes[]
+        int n = nodes.size();
+        return buildTreeUtil(nodes, 0, n - 1);
+    }
+
+    public void balanceTheTree() {
+        root = buildTree(root);
     }
 }
