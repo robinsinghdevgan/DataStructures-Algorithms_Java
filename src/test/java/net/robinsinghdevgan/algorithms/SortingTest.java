@@ -2,7 +2,7 @@ package net.robinsinghdevgan.algorithms;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import java.util.Arrays;
+//import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -29,6 +29,13 @@ public class SortingTest {
     @Test
     public void testInsertionSort() {
         Sort.doInsertionSort(arrUnsorted);
+        assertThat(arrUnsorted).isEqualTo(arrSorted);
+        assertThat(arrUnsorted).isNotEqualTo(arr1);
+    }
+
+    @Test
+    public void testSelectionSort() {
+        Sort.doSelectionSort(arrUnsorted);
         assertThat(arrUnsorted).isEqualTo(arrSorted);
         assertThat(arrUnsorted).isNotEqualTo(arr1);
     }
