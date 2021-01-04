@@ -3,6 +3,7 @@ package net.robinsinghdevgan.dataStructures;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class BinarySearchTree<E extends Comparable<E>> {
     private class Node {
         Node left, right;
@@ -11,12 +12,6 @@ public class BinarySearchTree<E extends Comparable<E>> {
         protected Node(E data) {
             this.data = data;
             left = right = null;
-        }
-
-        protected Node(Node left, E data, Node right) {
-            this.left = left;
-            this.data = data;
-            this.right = right;
         }
     }
 
