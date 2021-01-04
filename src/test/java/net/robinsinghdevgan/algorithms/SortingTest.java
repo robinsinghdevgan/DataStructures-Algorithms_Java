@@ -39,4 +39,11 @@ public class SortingTest {
         assertThat(arrUnsorted).isEqualTo(arrSorted);
         assertThat(arrUnsorted).isNotEqualTo(arr1);
     }
+
+    @Test
+    public void testHeapSort() {
+        Sort.doHeapSort(arrUnsorted);
+        assertThat(arrUnsorted).isEqualTo(arrSorted);
+        assertThat(arrUnsorted).isNotEqualTo(arr1);
+    }
 }
