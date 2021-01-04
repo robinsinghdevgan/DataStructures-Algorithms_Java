@@ -53,4 +53,11 @@ public class SortingTest {
         assertThat(arrUnsorted).isEqualTo(arrSorted);
         assertThat(arrUnsorted).isNotEqualTo(arr1);
     }
+
+    @Test
+    public void testMergeSort() {
+        Sort.doMergeSort(arrUnsorted);
+        assertThat(arrUnsorted).isEqualTo(arrSorted);
+        assertThat(arrUnsorted).isNotEqualTo(arr1);
+    }
 }
