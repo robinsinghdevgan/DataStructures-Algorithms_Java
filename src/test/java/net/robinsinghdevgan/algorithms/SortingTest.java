@@ -10,8 +10,8 @@ import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class SortingTest {
-    int[] arr1 = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 100, 200, 50};
-    int[] arrSorted = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 100, 200};
+    final int[] arr1 = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 100, 200, 50};
+    final int[] arrSorted = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 100, 200};
     int[] arrUnsorted = null;
     @BeforeAll
     public void setUp() {
@@ -43,6 +43,13 @@ public class SortingTest {
     @Test
     public void testHeapSort() {
         Sort.doHeapSort(arrUnsorted);
+        assertThat(arrUnsorted).isEqualTo(arrSorted);
+        assertThat(arrUnsorted).isNotEqualTo(arr1);
+    }
+
+    @Test
+    public void testCountingSort() {
+        Sort.doCountingSort(arrUnsorted);
         assertThat(arrUnsorted).isEqualTo(arrSorted);
         assertThat(arrUnsorted).isNotEqualTo(arr1);
     }

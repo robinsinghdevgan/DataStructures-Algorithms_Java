@@ -1,5 +1,7 @@
 package net.robinsinghdevgan.algorithms;
 
+import java.util.TreeMap;
+
 public class Sort {
     private static void swap(int[] arr, int i, int j) {
         int temp = arr[i];
@@ -101,5 +103,24 @@ public class Sort {
 
     public static void doHeapSort(int[] arr) {
         HeapSort.sort(arr);
+    }
+
+    public static void doCountingSort(int[] arr) {
+        var dict = new TreeMap<Integer, Integer>();
+        for (int i : arr) {
+            if (dict.containsKey(i)) {
+                dict.put(i, dict.get(i) + 1);
+            } else {
+                dict.put(i, 1);
+            }
+        }
+        int i = 0;
+        for(var entry: dict.entrySet()) {
+            int num = entry.getKey();
+            int occurrences = entry.getValue();
+            while(occurrences-- > 0) {
+                arr[i++] = num;
+            }
+        }
     }
 }
