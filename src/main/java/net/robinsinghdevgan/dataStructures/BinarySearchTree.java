@@ -124,6 +124,19 @@ public class BinarySearchTree<E extends Comparable<E>> {
             inOrderTraversalHelper(node.right, sb);
         }
     }
+    
+    private void inOrderTraversalToListHelper(Node node, List<E> list) {
+        if (node != null) {
+            inOrderTraversalToListHelper(node.left, list);
+            list.add(node.data);
+            inOrderTraversalToListHelper(node.right, list);
+        }
+    }
+    public List<E> inOrderTraversalToList(){
+        List<E> list = new ArrayList<E>();
+        inOrderTraversalToListHelper(root, list);
+        return list;
+    }
 
     // Check if this binary tree is empty
     public boolean isEmpty() {
