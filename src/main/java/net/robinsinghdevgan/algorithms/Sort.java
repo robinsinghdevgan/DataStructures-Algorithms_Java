@@ -2,6 +2,8 @@ package net.robinsinghdevgan.algorithms;
 
 import java.util.TreeMap;
 
+import net.robinsinghdevgan.dataStructures.BinarySearchTree;
+
 public class Sort {
     private static void swap(int[] arr, int i, int j) {
         int temp = arr[i];
@@ -160,8 +162,8 @@ public class Sort {
 
             // Initial index of merged subarry array
             int k = start;
-            while (i < n1 && j < n2) {  //index out of bounds check
-                if (L[i] <= R[j]) { //left one bigger so add this to kth postion
+            while (i < n1 && j < n2) { // index out of bounds check
+                if (L[i] <= R[j]) { // left one bigger so add this to kth postion
                     arr[k] = L[i];
                     i++;
                 } else {
@@ -242,5 +244,18 @@ public class Sort {
 
     public static void doQuickSort(int[] arr) {
         QuickSort.sort(arr, 0, arr.length - 1);
+    }
+
+    //add array to BST, return the inorder traversal
+    public static void doBSTSort(int[] arr) {
+        var tree = new BinarySearchTree<Integer>();
+        for (int i : arr) {
+            tree.add(i);
+        }
+        var list = tree.inOrderTraversalToList();
+        int index = 0;
+        for(int elem : list) {
+            arr[index++] = elem;
+        }
     }
 }

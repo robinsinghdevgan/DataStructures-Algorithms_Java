@@ -68,4 +68,11 @@ public class SortingTest {
         assertThat(arrUnsorted).isEqualTo(arrSorted);
         assertThat(arrUnsorted).isNotEqualTo(arr1);
     }
+
+    @Test
+    public void testBSTSort() {
+        Sort.doBSTSort(arrUnsorted);
+        assertThat(arrUnsorted).isEqualTo(arrSorted);
+        assertThat(arrUnsorted).isNotEqualTo(arr1);
+    }
 }
