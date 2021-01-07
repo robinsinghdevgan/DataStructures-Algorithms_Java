@@ -58,7 +58,7 @@ public class Graph<E extends Comparable<E>> {
             for (var entry : vertices.entrySet()) {
                 var outEdges = entry.getValue().getOutDegreeEdges();
                 for(int i = 0; i < outEdges.size(); i++) {
-                    if(outEdges.get(i).getTo() == value) {
+                    if(outEdges.get(i).getFrom() == value) {
                         this.edges.remove(outEdges.get(i));
                         outEdges.remove(i);
                     }
