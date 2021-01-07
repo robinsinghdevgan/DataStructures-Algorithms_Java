@@ -43,8 +43,10 @@ public class Graph<E extends Comparable<E>> {
             for (var entry : vertices.entrySet()) {
                 var inEdges = entry.getValue().getInDegreeEdges();
                 for(int i = 0; i < inEdges.size(); i++) {
-                    if(inEdges.get(i).getTo() == value)
+                    if(inEdges.get(i).getTo() == value) {
+                        this.edges.remove(inEdges.get(i));
                         inEdges.remove(i);
+                    }
                 }
             }
         } else
@@ -56,8 +58,10 @@ public class Graph<E extends Comparable<E>> {
             for (var entry : vertices.entrySet()) {
                 var outEdges = entry.getValue().getOutDegreeEdges();
                 for(int i = 0; i < outEdges.size(); i++) {
-                    if(outEdges.get(i).getTo() == value)
+                    if(outEdges.get(i).getTo() == value) {
+                        this.edges.remove(outEdges.get(i));
                         outEdges.remove(i);
+                    }
                 }
             }
         } else
