@@ -1,9 +1,9 @@
 package net.robinsinghdevgan.dataStructures;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+
+import static com.google.common.truth.Truth.assertThat;
 
 import net.robinsinghdevgan.dataStructures.Graphs.Graph;
 
@@ -36,7 +36,9 @@ public class GraphTest {
     public void test1() {
         var graph1 = createGraph();
         System.out.println(graph1.toString());
+        assertThat(graph1.numberOfVertices()).isEqualTo(9);
         graph1.removeVertex(8);
         System.out.println(graph1.toString());
+        assertThat(graph1.numberOfVertices()).isEqualTo(8);
     }
 }
