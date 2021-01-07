@@ -1,6 +1,7 @@
 package net.robinsinghdevgan.dataStructures.Graphs;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -90,5 +91,13 @@ public class Graph<E extends Comparable<E>> {
     public int numberOfVertices() {
         return vertices.size();
     }
+
+	public Collection<Vertex<E>> vertices() {
+		return vertices.values();
+	}
+
+	public Vertex<E> getVertex(E vertexValue) {
+		return vertices.get(vertexValue);
+	}
 
 }
