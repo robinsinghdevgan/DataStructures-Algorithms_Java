@@ -33,47 +33,58 @@ public class Graph<E extends Comparable<E>> {
 
     // also removes all edges associated with this vertex
     public Vertex<E> removeVertex(E value) {
-        removeEdges(value);
+        removeEdgesTo(value);
+        removeEdgesFrom(value);
         return vertices.remove(value);
     }
 
-    public void removeEdges(E value) throws IllegalArgumentException {
+    public void removeEdgesTo(E value) throws IllegalArgumentException {
         if (vertices.containsKey(value)) {
-            var outDegreeEdges = vertices.get(value).getOutDegreeEdges();
-            var inDegreeEdges = vertices.get(value).getInDegreeEdges();
-            for(var edge : outDegreeEdges) {
-                edges.remove(edge);
+            for (var entry : vertices.entrySet()) {
+                var inEdges = entry.getValue().getInDegreeEdges();
+                for(int i = 0; i < inEdges.size(); i++) {
+                    if(inEdges.get(i).getTo() == value)
+                        inEdges.remove(i);
+                }
             }
-            for(var edge : inDegreeEdges) {
-                edges.remove(edge);
+        } else
+            throw new IllegalArgumentException("Such a vertex does not exist");
+    }
+
+    public void removeEdgesFrom(E value) throws IllegalArgumentException {
+        if (vertices.containsKey(value)) {
+            for (var entry : vertices.entrySet()) {
+                var outEdges = entry.getValue().getOutDegreeEdges();
+                for(int i = 0; i < outEdges.size(); i++) {
+                    if(outEdges.get(i).getTo() == value)
+                        outEdges.remove(i);
+                }
             }
-        }
-        else
+        } else
             throw new IllegalArgumentException("Such a vertex does not exist");
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (E v : vertices.keySet()) {
-            String vertexName = "{ " + v.toString() + " }\n";
+        for (var v : vertices.entrySet()) {
+            String vertexName = "{ " + v.getKey().toString() + " }\n";
             sb.append(vertexName);
-            for (var e : edges) {
-                if (e.from == v) {
-                    for (int i = 0, len = (vertexName.length() / 2); i < len; i++)
-                        sb.append(" ");
-                    sb.append("\\");
-                    for (int i = 0, len = vertexName.length() / 2; i < len; i++)
-                        sb.append("-");
-                    sb.append(">" + e.toString() + "\n");
-                }
+            List<Edge<E>> edgesOfThisVertex = v.getValue().getOutDegreeEdges();
+            for (var e : edgesOfThisVertex) {
+                for (int i = 0, len = (vertexName.length() / 2); i < len; i++)
+                    sb.append(" ");
+                sb.append("\\");
+                for (int i = 0, len = vertexName.length() / 2; i < len; i++)
+                    sb.append("-");
+                sb.append(">" + e.toString() + "\n");
             }
         }
         return sb.toString();
     }
 
-	public int numberOfVertices() {
-		return vertices.size();
-	}
+    public int numberOfVertices() {
+        return vertices.size();
+    }
 
 }
