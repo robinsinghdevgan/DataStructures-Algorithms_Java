@@ -72,4 +72,8 @@ public class Graph<E extends Comparable<E>> {
         return sb.toString();
     }
 
+	public int numberOfVertices() {
+		return vertices.size();
+	}
+
 }
