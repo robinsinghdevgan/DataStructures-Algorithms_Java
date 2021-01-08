@@ -100,4 +100,8 @@ public class Graph<E extends Comparable<E>> {
 		return vertices.get(vertexValue);
 	}
 
+	public List<Edge<E>> getEdges() {
+		return edges;
+	}
+
 }
