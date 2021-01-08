@@ -10,7 +10,7 @@ import org.junit.jupiter.api.TestInstance;
 import net.robinsinghdevgan.dataStructures.Graphs.Graph;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ShortestPathTest {
+public class DijkstraSSSPTest {
     private Graph<Integer> createGraph() {
         var graph = new Graph<Integer>();
         for (int i = 0; i < 9; i++) {
@@ -38,19 +38,24 @@ public class ShortestPathTest {
         var graph1 = createGraph();
         System.out.println(graph1.toString());
 
-        var checkMap = new HashMap<Integer, Double>();
-        checkMap.put(0, 0.0);
-        checkMap.put(1, 4.0);
-        checkMap.put(2, 12.0);
-        checkMap.put(3, 19.0);
-        checkMap.put(4, 28.0);
-        checkMap.put(5, 16.0);
-        checkMap.put(6, 18.0);
-        checkMap.put(7, 5.0);
-        checkMap.put(8, 12.0);
+        var checkMap = new HashMap<Integer, String>();
+        checkMap.put(0, "[] and Costs: 0.0");
+        checkMap.put(1, "[0] and Costs: 4.0");
+        checkMap.put(2, "[0, 1] and Costs: 12.0");
+        checkMap.put(3, "[0, 1, 2] and Costs: 19.0");
+        checkMap.put(4, "[0, 1, 2, 3] and Costs: 28.0");
+        checkMap.put(5, "[0, 1, 2] and Costs: 16.0");
+        checkMap.put(6, "[0, 1, 2, 5] and Costs: 18.0");
+        checkMap.put(7, "[0, 1] and Costs: 5.0");
+        checkMap.put(8, "[0, 1, 7] and Costs: 12.0");
 
-        var obj = new ShortestPath<Integer>();
-        var distanceMap = obj.DijkstraSSPP(graph1, 0);
+        Integer sourceVertex = 0;
+        var obj = new DijkstraSSSP<Integer>();
+        var distanceMap = obj.getShortestPath(graph1, sourceVertex);
         assertThat(checkMap).isEqualTo(distanceMap);
+        
+        for (var entry : distanceMap.entrySet()) {
+            System.out.println("Path from: '" + sourceVertex + "' to: " + entry.getKey() + " : " + entry.getValue());
+        }
     }
 }
