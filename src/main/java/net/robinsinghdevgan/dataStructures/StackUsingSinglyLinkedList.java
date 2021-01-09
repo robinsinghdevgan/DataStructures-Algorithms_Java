@@ -55,5 +55,10 @@ public class StackUsingSinglyLinkedList<E> {
     public void setTop(int top) {
         this.top = top;
     }
+
+    @Override
+    public String toString() {
+        return list.toString();
+    }
     
 }
