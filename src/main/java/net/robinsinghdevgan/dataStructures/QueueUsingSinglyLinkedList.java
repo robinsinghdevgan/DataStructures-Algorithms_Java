@@ -37,5 +37,10 @@ public class QueueUsingSinglyLinkedList<E> implements Queue<E>{
     public boolean isEmpty() {
         return list.size() == 0;
     }
+
+    @Override
+    public String toString() {
+        return list.toString();
+    }
     
 }
