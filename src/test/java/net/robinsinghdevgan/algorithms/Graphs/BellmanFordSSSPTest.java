@@ -33,7 +33,7 @@ public class BellmanFordSSSPTest {
         return graph;
     }
 
-    private Graph<Integer> createGraphWithOnlyNegativeEdgeCosts() {
+    private Graph<Integer> createGraphWithNegativeEdgeCosts() {
         var graph = new Graph<Integer>();
         for (int i = 0; i < 9; i++) {
             graph.addVertex(i);
@@ -79,7 +79,7 @@ public class BellmanFordSSSPTest {
 
     @Test
     public void testGraphWithOnlyNegativeEdgeCosts() {
-        var graph1 = createGraphWithOnlyNegativeEdgeCosts();
+        var graph1 = createGraphWithNegativeEdgeCosts();
         System.out.println(graph1.toString());
 
         Integer sourceVertex = 0;
