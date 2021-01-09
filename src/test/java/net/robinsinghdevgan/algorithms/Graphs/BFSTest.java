@@ -36,7 +36,19 @@ public class BFSTest {
         System.out.println(graph.toString());
         var obj = new BFS<Integer>();
         var cost = obj.search(graph, 0, 8);
-        assertThat(cost).isEqualTo(41.0);
+        assertThat(cost).isEqualTo(28.0);
+        System.out.println(cost);
+
+        cost = obj.search(graph, 0, 6);
+        assertThat(cost).isEqualTo(53.0);
+        System.out.println(cost);
+
+        cost = obj.search(graph, 0, 7);
+        assertThat(cost).isEqualTo(12.0);
+        System.out.println(cost);
+
+        cost = obj.search(graph, 0, 3);
+        assertThat(cost).isEqualTo(35.0);
         System.out.println(cost);
     }
 }
