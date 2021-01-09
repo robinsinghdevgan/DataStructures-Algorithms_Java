@@ -1,6 +1,6 @@
 package net.robinsinghdevgan.algorithms.Graphs;
 
-//import static com.google.common.truth.Truth.assertThat;
+import static com.google.common.truth.Truth.assertThat;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -54,9 +54,11 @@ public class FloydWarshalAPSPTest {
         var obj = new FloydWarshalAPSP<Integer>();
         var graph = createGraphWithOnlyPositiveEdgeCosts();
         var res = obj.allPairsShortestPath(graph);
-        System.out.println(res);
+        assertThat(res.get(0).get(8)).isEqualTo(12.0);
+
         graph = createGraphWithNegativeEdgeCosts();
         res = obj.allPairsShortestPath(graph);
-        System.out.println(res);
+        assertThat(res.get(0).get(8)).isEqualTo(Double.POSITIVE_INFINITY);
+
     }
 }

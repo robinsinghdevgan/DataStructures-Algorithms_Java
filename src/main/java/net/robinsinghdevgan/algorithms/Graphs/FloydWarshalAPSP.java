@@ -5,7 +5,7 @@ import java.util.HashMap;
 import net.robinsinghdevgan.dataStructures.Graphs.Graph;
 
 public class FloydWarshalAPSP<E extends Comparable<E>> {
-    public String allPairsShortestPath(Graph<E> graph) {
+    public HashMap<E, HashMap<E, Double>> allPairsShortestPath(Graph<E> graph) {
         var costMatrix = new HashMap<E, HashMap<E, Double>>();
         /*
          * Initialize the cost matrix
@@ -67,18 +67,18 @@ public class FloydWarshalAPSP<E extends Comparable<E>> {
         StringBuilder sb = new StringBuilder();
         for (var row : costMatrix.entrySet()) {
             sb.append(row.getKey().toString() + " => | ");
-           
             for (var col : row.getValue().entrySet()) {
                 var s = col.getValue().toString();
-                if(s == "Infinity")
+                if (s == "Infinity")
                     sb.append(" Inf" + " | ");
-                else if (s== "-Infinity")
+                else if (s == "-Infinity")
                     sb.append("-Inf" + " | ");
                 else
                     sb.append(" " + s + " | ");
             }
             sb.append("\n");
         }
-        return sb.toString();
+        System.out.println(sb.toString());
+        return costMatrix;
     }
 }
