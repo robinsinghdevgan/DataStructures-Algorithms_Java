@@ -102,6 +102,16 @@ public class Graph<E extends Comparable<E>> {
 
 	public List<Edge<E>> getEdges() {
 		return edges;
-	}
-
+    }
+    
+    public Double getCost(E source, E destination) {
+        if(source == destination)
+            return 0.0;
+        var src = vertices.get(source);
+        for(var e : src.getOutDegreeEdges()) {
+            if(e.getTo() == destination)
+                return e.getCost();
+        }
+        return Double.POSITIVE_INFINITY;
+    }
 }
