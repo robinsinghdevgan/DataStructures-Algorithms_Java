@@ -43,8 +43,8 @@ public class Graph<E extends Comparable<E>> {
         if (vertices.containsKey(value)) {
             for (var entry : vertices.entrySet()) {
                 var inEdges = entry.getValue().getInDegreeEdges();
-                for(int i = 0; i < inEdges.size(); i++) {
-                    if(inEdges.get(i).getTo() == value) {
+                for (int i = 0; i < inEdges.size(); i++) {
+                    if (inEdges.get(i).getTo() == value) {
                         this.edges.remove(inEdges.get(i));
                         inEdges.remove(i);
                     }
@@ -58,8 +58,8 @@ public class Graph<E extends Comparable<E>> {
         if (vertices.containsKey(value)) {
             for (var entry : vertices.entrySet()) {
                 var outEdges = entry.getValue().getOutDegreeEdges();
-                for(int i = 0; i < outEdges.size(); i++) {
-                    if(outEdges.get(i).getFrom() == value) {
+                for (int i = 0; i < outEdges.size(); i++) {
+                    if (outEdges.get(i).getFrom() == value) {
                         this.edges.remove(outEdges.get(i));
                         outEdges.remove(i);
                     }
@@ -92,26 +92,51 @@ public class Graph<E extends Comparable<E>> {
         return vertices.size();
     }
 
-	public Collection<Vertex<E>> vertices() {
-		return vertices.values();
-	}
-
-	public Vertex<E> getVertex(E vertexValue) {
-		return vertices.get(vertexValue);
-	}
-
-	public List<Edge<E>> getEdges() {
-		return edges;
+    public Collection<Vertex<E>> vertices() {
+        return vertices.values();
     }
-    
+
+    public Vertex<E> getVertex(E vertexValue) {
+        return vertices.get(vertexValue);
+    }
+
+    public List<Edge<E>> getEdges() {
+        return edges;
+    }
+
     public Double getCost(E source, E destination) {
-        if(source == destination)
+        if (source == destination)
             return 0.0;
         var src = vertices.get(source);
-        for(var e : src.getOutDegreeEdges()) {
-            if(e.getTo() == destination)
+        for (var e : src.getOutDegreeEdges()) {
+            if (e.getTo() == destination)
                 return e.getCost();
         }
         return Double.POSITIVE_INFINITY;
+    }
+
+    public int numberOfEdges() {
+        return edges.size();
+    }
+
+    public void removeEdge(Edge<E> edgeToRemove) {
+        for (var v : vertices.entrySet()) {
+            List<Edge<E>> edgesOfThisVertex = v.getValue().getOutDegreeEdges();
+            List<Integer> removeIndices = new ArrayList<>();
+            for (int i = 0; i < edgesOfThisVertex.size(); i++) {
+                if (edgesOfThisVertex.get(i).equals(edgeToRemove)) {
+                    removeIndices.add(i);
+                }
+            }
+            for (var i : removeIndices)
+                edgesOfThisVertex.remove(i.intValue());
+        }
+        List<Integer> removeIndices = new ArrayList<>();
+        for (int i = 0; i < edges.size(); i++) {
+            if (edges.get(i).equals(edgeToRemove))
+                removeIndices.add(i);
+        }
+        for (var i : removeIndices)
+            edges.remove(i.intValue());
     }
 }
