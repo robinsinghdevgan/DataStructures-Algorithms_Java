@@ -88,4 +88,12 @@ class SinglyLinkedListTest {
         assertEquals(null, sll.getLast());
 
     }
+
+    @Test
+    void reverse() throws Exception {
+        SinglyLinkedList<Integer> sll = null;
+        sll = testCollectionToList();
+        SinglyLinkedList<Integer> newList = sll.reverse();
+        System.out.println(newList.toString());
+    }
 }

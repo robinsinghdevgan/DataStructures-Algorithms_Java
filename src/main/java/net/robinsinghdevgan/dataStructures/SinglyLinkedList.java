@@ -425,6 +425,29 @@ public class SinglyLinkedList<E> implements List<E> {
         return true;
     }
 
+    /* Reverses the linkedList
+        * returns a new linkedList with reverse order.
+    */
+    public SinglyLinkedList<E> reverse() {
+        SinglyLinkedList<E> newList = null;
+        try{
+            java.util.Stack<E> stk = new java.util.Stack<E>();
+            Iterator<E> it = this.iterator();
+            while(it.hasNext()){
+                stk.push(it.next());
+            }
+            newList = new SinglyLinkedList<E>();
+            while(!stk.isEmpty()){
+                newList.add(stk.pop());
+            }
+            return newList;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
     @Override
     public boolean retainAll(Collection<?> collection) {
         boolean listChanged = false;
