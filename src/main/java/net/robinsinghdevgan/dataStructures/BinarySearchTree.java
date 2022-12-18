@@ -5,18 +5,8 @@ import java.util.List;
 
 @SuppressWarnings("unused")
 public class BinarySearchTree<E extends Comparable<E>> {
-    private class Node {
-        Node left, right;
-        E data;
-
-        protected Node(E data) {
-            this.data = data;
-            left = right = null;
-        }
-    }
 
     private int nodeCount = 0;
-
     private Node root = null;
 
     public boolean add(E data) {
@@ -56,43 +46,32 @@ public class BinarySearchTree<E extends Comparable<E>> {
 
     // private recursive method to find an element in the tree
     private boolean contains(Node node, E elem) {
-
         // Base case: reached bottom, value not found
-        if (node == null)
-            return false;
+        if (node == null) return false;
 
         int cmp = elem.compareTo(node.data);
 
         // Dig into the left subtree because the value we're
         // looking for is smaller than the current value
-        if (cmp < 0)
-            return contains(node.left, elem);
-
-        // Dig into the right subtree because the value we're
-        // looking for is greater than the current value
-        else if (cmp > 0)
-            return contains(node.right, elem);
-
-        // We found the value we were looking for
-        else
-            return true;
+        if (cmp < 0) return contains(node.left, elem);
+            // Dig into the right subtree because the value we're
+            // looking for is greater than the current value
+        else if (cmp > 0) return contains(node.right, elem);
+            // We found the value we were looking for
+        else return true;
     }
 
     // Helper method to find the rightmost node (which has the largest value)
     private Node findMax(Node node) {
-        if (node == null)
-            return null;
-        while (node.right != null)
-            node = node.right;
+        if (node == null) return null;
+        while (node.right != null) node = node.right;
         return node;
     }
 
     // Helper method to find the leftmost node (which has the smallest value)
     private Node findMin(Node node) {
-        if (node == null)
-            return null;
-        while (node.left != null)
-            node = node.left;
+        if (node == null) return null;
+        while (node.left != null) node = node.left;
         return node;
     }
 
@@ -103,8 +82,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
 
     // Recursive helper method to compute the height of the tree
     private int height(Node node) {
-        if (node == null)
-            return 0;
+        if (node == null) return 0;
         return Math.max(height(node.left), height(node.right)) + 1;
     }
 
@@ -120,11 +98,11 @@ public class BinarySearchTree<E extends Comparable<E>> {
     private void inOrderTraversalHelper(Node node, StringBuilder sb) {
         if (node != null) {
             inOrderTraversalHelper(node.left, sb);
-            sb.append(node.data + ",");
+            sb.append(node.data).append(",");
             inOrderTraversalHelper(node.right, sb);
         }
     }
-    
+
     private void inOrderTraversalToListHelper(Node node, List<E> list) {
         if (node != null) {
             inOrderTraversalToListHelper(node.left, list);
@@ -132,8 +110,9 @@ public class BinarySearchTree<E extends Comparable<E>> {
             inOrderTraversalToListHelper(node.right, list);
         }
     }
-    public List<E> inOrderTraversalToList(){
-        List<E> list = new ArrayList<E>();
+
+    public List<E> inOrderTraversalToList() {
+        List<E> list = new ArrayList<>();
         inOrderTraversalToListHelper(root, list);
         return list;
     }
@@ -157,8 +136,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
 
     // Helper for remove(E elem)
     private Node remove(Node node, E elem) {
-        if (node == null)
-            return null;
+        if (node == null) return null;
         if (node.data.equals(elem)) {
             // This is the case with only a right subtree or
             // no subtree at all. In this situation just
@@ -176,9 +154,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
                 node.data = maxNodeInLeftSubTree.data;
                 node.left = remove(node.left, elem);
             }
-        } else if (root.data.compareTo(elem) > 0)
-
-        {
+        } else if (root.data.compareTo(elem) > 0) {
             node.left = remove(node.left, elem);
         } else {
             node.right = remove(node.right, elem);
@@ -199,15 +175,12 @@ public class BinarySearchTree<E extends Comparable<E>> {
     }
 
     public void printBinaryTree(StringBuilder sb, Node root, int level) {
-        if (root == null)
-            return;
+        if (root == null) return;
         printBinaryTree(sb, root.right, level + 1);
         if (level != 0) {
-            for (int i = 0; i < level - 1; i++)
-                sb.append("|\t");
-            sb.append("|-------" + root.data);
-        } else
-            sb.append(root.data);
+            sb.append("|\t".repeat(Math.max(0, level - 1)));
+            sb.append("|-------").append(root.data);
+        } else sb.append(root.data);
         sb.append("\n");
         printBinaryTree(sb, root.left, level + 1);
     }
@@ -219,8 +192,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
      */
     void storeBSTNodes(Node root, List<Node> nodes) {
         // Base case
-        if (root == null)
-            return;
+        if (root == null) return;
 
         // Store nodes in Inorder (which is sorted
         // order for BST)
@@ -232,8 +204,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
     /* Recursive function to construct binary tree */
     Node buildTreeUtil(List<Node> nodes, int start, int end) {
         // base case
-        if (start > end)
-            return null;
+        if (start > end) return null;
 
         /* Get the middle element and make it root */
         int mid = (start + end) / 2;
@@ -252,7 +223,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
     // a balanced BST
     Node buildTree(Node root) {
         // Store nodes of given BST in sorted order
-        List<Node> nodes = new ArrayList<Node>();
+        List<Node> nodes = new ArrayList<>();
         storeBSTNodes(root, nodes);
 
         // Constucts BST from nodes[]
@@ -262,5 +233,15 @@ public class BinarySearchTree<E extends Comparable<E>> {
 
     public void balanceTheTree() {
         root = buildTree(root);
+    }
+
+    private class Node {
+        Node left, right;
+        E data;
+
+        protected Node(E data) {
+            this.data = data;
+            left = right = null;
+        }
     }
 }

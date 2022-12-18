@@ -8,7 +8,7 @@ References:
 [2] https://www.geeksforgeeks.org/algorithms-gq/pattern-searching/
 */
 public class StringPatternSearch {
-   
+
     public static ArrayList<Integer> naiveSearch(String pat, String txt) {
         ArrayList<Integer> result = new ArrayList<>();
         int M = pat.length();
@@ -16,17 +16,14 @@ public class StringPatternSearch {
 
         /* A loop to slide pat one by one */
         for (int i = 0; i <= N - M; i++) {
-
             int j;
 
             /*
              * For current index i, check for pattern match
              */
-            for (j = 0; j < M; j++)
-                if (txt.charAt(i + j) != pat.charAt(j))
-                    break;
+            for (j = 0; j < M; j++) if (txt.charAt(i + j) != pat.charAt(j)) break;
 
-            if (j == M) {// if pat[0...M-1] = txt[i, i+1, ...i+M-1] 
+            if (j == M) { // if pat[0...M-1] = txt[i, i+1, ...i+M-1]
                 System.out.println("NaiveSearch : Pattern found at index " + i);
                 result.add(i);
             }
@@ -41,7 +38,7 @@ public class StringPatternSearch {
 
         // create lps[] that will hold the longest
         // prefix suffix values for pattern
-        int lps[] = new int[M];
+        int[] lps = new int[M];
         int j = 0; // index for pat[]
 
         // Preprocess the pattern (calculate lps[]
@@ -56,24 +53,21 @@ public class StringPatternSearch {
             }
             if (j == M) {
                 System.out.println("KMP: Found pattern " + "at index " + (i - j));
-                result.add(i-j);
+                result.add(i - j);
                 j = lps[j - 1];
             }
-
             // mismatch after j matches
             else if (i < N && pat.charAt(j) != txt.charAt(i)) {
                 // Do not match lps[0..lps[j-1]] characters,
                 // they will match anyway
-                if (j != 0)
-                    j = lps[j - 1];
-                else
-                    i = i + 1;
+                if (j != 0) j = lps[j - 1];
+                else i = i + 1;
             }
         }
         return result;
     }
 
-    private static ArrayList<Integer> computeLPSArray(String pat, int M, int lps[]) {
+    private static void computeLPSArray(String pat, int M, int[] lps) {
         ArrayList<Integer> result = new ArrayList<>();
         // length of the previous longest prefix suffix
         int len = 0;
@@ -86,24 +80,20 @@ public class StringPatternSearch {
                 len++;
                 lps[i] = len;
                 i++;
-            } else // (pat[i] != pat[len])
-            {
+            } else { // (pat[i] != pat[len])
                 // This is tricky. Consider the example.
                 // AAACAAAA and i = 7. The idea is similar
                 // to search step.
                 if (len != 0) {
                     len = lps[len - 1];
-
                     // Also, note that we do not increment
                     // i here
-                } else // if (len == 0)
-                {
+                } else { // if (len == 0)
                     lps[i] = len;
                     i++;
                 }
             }
         }
-        return result;
     }
 
     // Rabin-Karp
@@ -125,7 +115,7 @@ public class StringPatternSearch {
         for (int i = pat.length(); i < txt.length(); i++) {
             // Checks the two substrings are actually equal or not, to protect
             // against hash collision.
-            if (tHash == sHash && txt.substring(i - pat.length(), i).equals(pat)) {
+            if (tHash == sHash && txt.startsWith(pat, i - pat.length())) {
                 found = true;
                 System.out.println("RabinKarp: Pattern found at: " + (i - pat.length())); // Found a match.
                 result.add(i - pat.length());
@@ -136,7 +126,7 @@ public class StringPatternSearch {
             tHash = tHash * BASE + txt.charAt(i);
         }
         // Tries to match pat and txt.substring(txt.length() - pat.length()).
-        if (tHash == sHash && txt.substring(txt.length() - pat.length()).equals(pat)) {
+        if (tHash == sHash && txt.endsWith(pat)) {
             found = true;
             System.out.println("RabinKarp: Pattern found at: " + (txt.length() - pat.length()));
             result.add(txt.length() - pat.length());

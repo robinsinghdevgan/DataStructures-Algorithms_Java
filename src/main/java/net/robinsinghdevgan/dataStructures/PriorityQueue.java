@@ -3,12 +3,12 @@ package net.robinsinghdevgan.dataStructures;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class PriorityQueue<T extends Comparable<T>> {
-
     // A dynamic list to track the elements inside the heap
-    private List<T> heap = null;
+    private List<T> heap;
 
     // Construct and initially empty priority queue
     public PriorityQueue() {
@@ -24,31 +24,26 @@ public class PriorityQueue<T extends Comparable<T>> {
     // can be found at:
     // http://www.cs.umd.edu/~meesh/351/mount/lectures/lect14-heapsort-analysis-part.pdf
     public PriorityQueue(T[] elems) {
-
         int heapSize = elems.length;
-        heap = new ArrayList<T>(heapSize);
+        heap = new ArrayList<>(heapSize);
 
         // Place all element in heap
-        for (int i = 0; i < heapSize; i++)
-            heap.add(elems[i]);
+        Collections.addAll(heap, elems);
 
         // Heapify process, O(n)
-        for (int i = Math.max(0, (heapSize / 2) - 1); i >= 0; i--)
-            sink(i);
+        for (int i = Math.max(0, (heapSize / 2) - 1); i >= 0; i--) sink(i);
     }
 
     // Priority queue construction, O(n)
     public PriorityQueue(Collection<T> elems) {
-
         int heapSize = elems.size();
-        heap = new ArrayList<T>(heapSize);
+        heap = new ArrayList<>(heapSize);
 
         // Add all elements of the given collection to the heap
         heap.addAll(elems);
 
         // Heapify process, O(n)
-        for (int i = Math.max(0, (heapSize / 2) - 1); i >= 0; i--)
-            sink(i);
+        for (int i = Math.max(0, (heapSize / 2) - 1); i >= 0; i--) sink(i);
     }
 
     // Returns true/false depending on if the priority queue is empty
@@ -70,8 +65,7 @@ public class PriorityQueue<T extends Comparable<T>> {
     // priority in this priority queue. If the priority
     // queue is empty null is returned.
     public T peek() {
-        if (isEmpty())
-            return null;
+        if (isEmpty()) return null;
         return heap.get(0);
     }
 
@@ -83,18 +77,14 @@ public class PriorityQueue<T extends Comparable<T>> {
     // Test if an element is in heap, O(n)
     public boolean contains(T elem) {
         // Linear scan to check containment
-        for (int i = 0; i < size(); i++)
-            if (heap.get(i).equals(elem))
-                return true;
+        for (int i = 0; i < size(); i++) if (heap.get(i).equals(elem)) return true;
         return false;
     }
 
     // Adds an element to the priority queue, the
     // element must not be null, O(log(n))
     public void add(T elem) {
-
-        if (elem == null)
-            throw new IllegalArgumentException();
+        if (elem == null) throw new IllegalArgumentException();
 
         heap.add(elem);
 
@@ -112,7 +102,6 @@ public class PriorityQueue<T extends Comparable<T>> {
 
     // Perform bottom up node swim, O(log(n))
     private void swim(int k) {
-
         // Grab the index of the next parent node WRT to k
         int parent = (k - 1) / 2;
 
@@ -138,13 +127,11 @@ public class PriorityQueue<T extends Comparable<T>> {
 
             // Find which is smaller left or right
             // If right is smaller set smallest to be right
-            if (right < heapSize && less(right, left))
-                smallest = right;
+            if (right < heapSize && less(right, left)) smallest = right;
 
             // Stop if we're outside the bounds of the tree
             // or stop early if we cannot sink k anymore
-            if (left >= heapSize || less(k, smallest))
-                break;
+            if (left >= heapSize || less(k, smallest)) break;
 
             // Move down the tree following the smallest node
             swap(smallest, k);
@@ -163,8 +150,7 @@ public class PriorityQueue<T extends Comparable<T>> {
 
     // Removes a particular element in the heap, O(n)
     public boolean remove(T element) {
-        if (element == null)
-            return false;
+        if (element == null) return false;
         // Linear removal via search, O(n)
         for (int i = 0; i < size(); i++) {
             if (element.equals(heap.get(i))) {
@@ -177,8 +163,7 @@ public class PriorityQueue<T extends Comparable<T>> {
 
     // Removes a node at particular index, O(log(n))
     private T removeAt(int i) {
-        if (isEmpty())
-            return null;
+        if (isEmpty()) return null;
 
         int indexOfLastElem = size() - 1;
         T removed_data = heap.get(i);
@@ -188,16 +173,14 @@ public class PriorityQueue<T extends Comparable<T>> {
         heap.remove(indexOfLastElem);
 
         // Check if the last element was removed
-        if (i == indexOfLastElem)
-            return removed_data;
+        if (i == indexOfLastElem) return removed_data;
         T elem = heap.get(i);
 
         // Try sinking element
         sink(i);
 
         // If sinking did not work try swimming
-        if (heap.get(i).equals(elem))
-            swim(i);
+        if (heap.get(i).equals(elem)) swim(i);
         return removed_data;
     }
 
@@ -208,8 +191,7 @@ public class PriorityQueue<T extends Comparable<T>> {
     public boolean isMinHeap(int k) {
         // If we are outside the bounds of the heap return true
         int heapSize = size();
-        if (k >= heapSize)
-            return true;
+        if (k >= heapSize) return true;
 
         int left = 2 * k + 1;
         int right = 2 * k + 2;
@@ -217,10 +199,8 @@ public class PriorityQueue<T extends Comparable<T>> {
         // Make sure that the current node k is less than
         // both of its children left, and right if they exist
         // return false otherwise to indicate an invalid heap
-        if (left < heapSize && !less(k, left))
-            return false;
-        if (right < heapSize && !less(k, right))
-            return false;
+        if (left < heapSize && !less(k, left)) return false;
+        if (right < heapSize && !less(k, right)) return false;
 
         // Recurse on both children to make sure they're also valid heaps
         return isMinHeap(left) && isMinHeap(right);

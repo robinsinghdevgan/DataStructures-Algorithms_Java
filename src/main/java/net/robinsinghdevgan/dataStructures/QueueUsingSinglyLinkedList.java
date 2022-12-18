@@ -1,10 +1,10 @@
 package net.robinsinghdevgan.dataStructures;
 
-public class QueueUsingSinglyLinkedList<E> implements Queue<E>{
-    private SinglyLinkedList<E> list;
+public class QueueUsingSinglyLinkedList<E> implements Queue<E> {
+    private final SinglyLinkedList<E> list;
 
-    public QueueUsingSinglyLinkedList(){
-        list = new SinglyLinkedList<E>();
+    public QueueUsingSinglyLinkedList() {
+        list = new SinglyLinkedList<>();
     }
 
     @Override
@@ -42,5 +42,4 @@ public class QueueUsingSinglyLinkedList<E> implements Queue<E>{
     public String toString() {
         return list.toString();
     }
-    
 }

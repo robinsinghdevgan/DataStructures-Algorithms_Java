@@ -3,9 +3,9 @@ package net.robinsinghdevgan.dataStructures;
 import java.util.EmptyStackException;
 
 public class StackUsingArray<E> {
-    private int size = 0;
+    private int size;
     private int top = -1;
-    private Object[] array = null;
+    private Object[] array;
 
     public StackUsingArray(int size) {
         this.size = size;
@@ -17,35 +17,32 @@ public class StackUsingArray<E> {
         array = new Object[size];
     }
 
-    public E push(E item) throws IndexOutOfBoundsException{
-        try{
+    public void push(E item) throws IndexOutOfBoundsException {
+        try {
             array[++top] = item;
-        }catch (IndexOutOfBoundsException ex){
+        } catch (IndexOutOfBoundsException ex) {
             throw new StackOverflowError(ex.toString());
         }
-        return item;
     }
 
     public boolean isFull() {
-        return top == size-1;
+        return top == size - 1;
     }
 
     public E pop() {
-        if(this.isEmpty())
-            throw new EmptyStackException();
+        if (this.isEmpty()) throw new EmptyStackException();
         return element(top--);
     }
 
     public E peek() {
-        if(this.isEmpty())
-            throw new EmptyStackException();
+        if (this.isEmpty()) throw new EmptyStackException();
         return element(top);
     }
 
     // Safe because push(T) is type checked.
     @SuppressWarnings("unchecked")
     private E element(int index) {
-        return (E)array[index];
+        return (E) array[index];
     }
 
     public boolean isEmpty() {
@@ -67,5 +64,4 @@ public class StackUsingArray<E> {
     public void setTop(int top) {
         this.top = top;
     }
-    
 }

@@ -1,17 +1,17 @@
 package net.robinsinghdevgan.dataStructures;
 
 /**
- * @author Robin Singh Devgan
  * @param <E> the type of element held int the queue
+ * @author Robin Singh Devgan
  */
 public interface Queue<E> {
-    public void offer(E elem);
+    void offer(E elem);
 
-    public E poll();
+    E poll();
 
-    public E peek();
+    E peek();
 
-    public int size();
+    int size();
 
-    public boolean isEmpty();
+    boolean isEmpty();
 }

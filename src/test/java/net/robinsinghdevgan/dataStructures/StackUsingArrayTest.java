@@ -1,56 +1,55 @@
 package net.robinsinghdevgan.dataStructures;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.EmptyStackException;
-
 import org.junit.jupiter.api.Assertions;
-//import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
+import java.util.EmptyStackException;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class StackUsingArrayTest {
-
-    private StackUsingArray<String> s;
     private final int size = 15;
+    private StackUsingArray<String> s;
 
     @BeforeAll
     public void setup() {
-        s = new StackUsingArray<String>(size);
+        s = new StackUsingArray<>(size);
     }
 
     @Test
     public void test1() {
-        assertEquals(true, s.isEmpty());
+        assertTrue(s.isEmpty());
         assertEquals(15, s.getSize());
         s.push("a");
-        assertEquals(false, s.isEmpty());
+        assertFalse(s.isEmpty());
         assertEquals("a", s.peek());
         assertEquals("a", s.pop());
-        assertEquals(true, s.isEmpty());
+        assertTrue(s.isEmpty());
     }
 
     @Test
     public void test2() {
-        String[] x = { "a", "b", "c", "d" };
-        for (int i = 0; i < x.length; i++) {
-            s.push(x[i]);
+        String[] x = {"a", "b", "c", "d"};
+        for (String value : x) {
+            s.push(value);
             assertEquals(size, s.getSize());
-            assertEquals(x[i], s.peek());
+            assertEquals(value, s.peek());
         }
 
         for (int i = x.length - 1; i >= 0; i--) {
             assertEquals(x[i], s.pop());
         }
-        assertEquals(true, s.isEmpty());
+        assertTrue(s.isEmpty());
     }
 
-    @Test()
+    @Test
     public void test3() {
-        Assertions.assertThrows(EmptyStackException.class, () -> {
-            s.pop();
-        });
+        Assertions.assertThrows(
+                EmptyStackException.class,
+                () -> s.pop()
+        );
     }
 }

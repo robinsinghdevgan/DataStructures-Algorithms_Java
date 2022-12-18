@@ -1,10 +1,11 @@
 package net.robinsinghdevgan.algorithms;
 
-import java.util.TreeMap;
-
 import net.robinsinghdevgan.dataStructures.BinarySearchTree;
 
+import java.util.TreeMap;
+
 public class Sort {
+
     private static void swap(int[] arr, int i, int j) {
         int temp = arr[i];
         arr[i] = arr[j];
@@ -16,8 +17,7 @@ public class Sort {
         for (int i = 0; i < size; ++i) {
             int current = arr[i];
             for (int j = i + 1; j < size; ++j) {
-                if (current > arr[j])
-                    swap(arr, i, j);
+                if (current > arr[j]) swap(arr, i, j);
             }
         }
     }
@@ -25,7 +25,11 @@ public class Sort {
     public static void doInsertionSort(int[] arr) {
         int size = arr.length;
         // sortedPartitionIndex starts from 1 as 0th is already a sorted element.
-        for (int sortedPartitionIndex = 1; sortedPartitionIndex < size; sortedPartitionIndex++) {
+        for (
+                int sortedPartitionIndex = 1;
+                sortedPartitionIndex < size;
+                sortedPartitionIndex++
+        ) {
             int current = arr[sortedPartitionIndex];
             // index i runs backwards, starts from sortedPartitionIndex - 1
             int i = sortedPartitionIndex - 1;
@@ -54,55 +58,6 @@ public class Sort {
         }
     }
 
-    // https://www.geeksforgeeks.org/heap-sort/
-    // Java program for implementation of Heap Sort
-    private static class HeapSort {
-        protected static void sort(int arr[]) {
-            int n = arr.length;
-
-            // Build heap (rearrange array)
-            for (int i = n / 2 - 1; i >= 0; i--)
-                heapify(arr, n, i);
-
-            // One by one extract an element from heap
-            for (int i = n - 1; i > 0; i--) {
-                // Move current root to end
-                int temp = arr[0];
-                arr[0] = arr[i];
-                arr[i] = temp;
-
-                // call max heapify on the reduced heap
-                heapify(arr, i, 0);
-            }
-        }
-
-        // To heapify a subtree rooted with node i which is
-        // an index in arr[]. n is size of heap
-        private static void heapify(int arr[], int n, int i) {
-            int largest = i; // Initialize largest as root
-            int l = 2 * i + 1; // left = 2*i + 1
-            int r = 2 * i + 2; // right = 2*i + 2
-
-            // If left child is larger than root
-            if (l < n && arr[l] > arr[largest])
-                largest = l;
-
-            // If right child is larger than largest so far
-            if (r < n && arr[r] > arr[largest])
-                largest = r;
-
-            // If largest is not root
-            if (largest != i) {
-                int swap = arr[i];
-                arr[i] = arr[largest];
-                arr[largest] = swap;
-
-                // Recursively heapify the affected sub-tree
-                heapify(arr, n, largest);
-            }
-        }
-    }
-
     public static void doHeapSort(int[] arr) {
         HeapSort.sort(arr);
     }
@@ -126,7 +81,76 @@ public class Sort {
         }
     }
 
+    public static void doMergeSort(int[] arr) {
+        MergeSort.sort(arr);
+    }
+
+    public static void doQuickSort(int[] arr) {
+        QuickSort.sort(arr, 0, arr.length - 1);
+    }
+
+    //add array to BST, return the inorder traversal
+    public static void doBSTSort(int[] arr) {
+        var tree = new BinarySearchTree<Integer>();
+        for (int i : arr) {
+            tree.add(i);
+        }
+        var list = tree.inOrderTraversalToList();
+        int index = 0;
+        for (int elem : list) {
+            arr[index++] = elem;
+        }
+    }
+
+    // https://www.geeksforgeeks.org/heap-sort/
+    // Java program for implementation of Heap Sort
+    private static class HeapSort {
+
+        protected static void sort(int[] arr) {
+            int n = arr.length;
+
+            // Build heap (rearrange array)
+            for (int i = n / 2 - 1; i >= 0; i--) heapify(arr, n, i);
+
+            // One by one extract an element from heap
+            for (int i = n - 1; i > 0; i--) {
+                // Move current root to end
+                int temp = arr[0];
+                arr[0] = arr[i];
+                arr[i] = temp;
+
+                // call max heapify on the reduced heap
+                heapify(arr, i, 0);
+            }
+        }
+
+        // To heapify a subtree rooted with node i which is
+        // an index in arr[]. n is size of heap
+        private static void heapify(int[] arr, int n, int i) {
+            int largest = i; // Initialize largest as root
+            int l = 2 * i + 1; // left = 2*i + 1
+            int r = 2 * i + 2; // right = 2*i + 2
+
+            // If left child is larger than root
+            if (l < n && arr[l] > arr[largest]) largest = l;
+
+            // If right child is larger than largest so far
+            if (r < n && arr[r] > arr[largest]) largest = r;
+
+            // If largest is not root
+            if (largest != i) {
+                int swap = arr[i];
+                arr[i] = arr[largest];
+                arr[largest] = swap;
+
+                // Recursively heapify the affected subtree
+                heapify(arr, n, largest);
+            }
+        }
+    }
+
     private static class MergeSort {
+
         private static void sort(int[] arr) {
             mergeSort(arr, 0, arr.length - 1);
         }
@@ -146,14 +170,12 @@ public class Sort {
             int n2 = end - mid;
 
             /* Create temp arrays */
-            int L[] = new int[n1];
-            int R[] = new int[n2];
+            int[] L = new int[n1];
+            int[] R = new int[n2];
 
             /* Copy data to temp arrays */
-            for (int i = 0; i < n1; ++i)
-                L[i] = arr[start + i];
-            for (int j = 0; j < n2; ++j)
-                R[j] = arr[mid + 1 + j];
+            System.arraycopy(arr, start, L, 0, n1);
+            for (int j = 0; j < n2; ++j) R[j] = arr[mid + 1 + j];
 
             /* Merge the temp arrays */
 
@@ -187,20 +209,16 @@ public class Sort {
                 k++;
             }
         }
-
-    }
-
-    public static void doMergeSort(int[] arr) {
-        MergeSort.sort(arr);
     }
 
     private static class QuickSort {
+
         /*
          * This function takes last element as pivot, places the pivot element at its
          * correct position in sorted array, and places all smaller (smaller than pivot)
          * to left of pivot and all greater elements to right of pivot
          */
-        private static int partition(int arr[], int low, int high) {
+        private static int partition(int[] arr, int low, int high) {
             int pivot = arr[high];
             int i = (low - 1); // index of smaller element
             for (int j = low; j < high; j++) {
@@ -227,7 +245,7 @@ public class Sort {
          * The main function that implements QuickSort() arr[] --> Array to be sorted,
          * low --> Starting index, high --> Ending index
          */
-        private static void sort(int arr[], int low, int high) {
+        private static void sort(int[] arr, int low, int high) {
             if (low < high) {
                 /*
                  * pi is partitioning index, arr[pi] is now at right place
@@ -239,23 +257,6 @@ public class Sort {
                 sort(arr, low, pi - 1);
                 sort(arr, pi + 1, high);
             }
-        }
-    }
-
-    public static void doQuickSort(int[] arr) {
-        QuickSort.sort(arr, 0, arr.length - 1);
-    }
-
-    //add array to BST, return the inorder traversal
-    public static void doBSTSort(int[] arr) {
-        var tree = new BinarySearchTree<Integer>();
-        for (int i : arr) {
-            tree.add(i);
-        }
-        var list = tree.inOrderTraversalToList();
-        int index = 0;
-        for(int elem : list) {
-            arr[index++] = elem;
         }
     }
 }

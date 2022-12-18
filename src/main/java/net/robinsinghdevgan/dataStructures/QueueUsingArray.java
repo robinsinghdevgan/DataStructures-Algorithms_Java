@@ -2,7 +2,7 @@ package net.robinsinghdevgan.dataStructures;
 
 public class QueueUsingArray<E> implements Queue<E> {
     private int front, rear;
-    private Object[] array = null;
+    private Object[] array;
 
     public QueueUsingArray(int capacity) {
         array = new Object[capacity + 1];
@@ -62,7 +62,8 @@ public class QueueUsingArray<E> implements Queue<E> {
     }
 
     private int adjustIndex(int index, int size) {
-        return index >= size ? index - size // go around the array
+        return index >= size
+                ? index - size // go around the array
                 : index; // return the index, no going around the array required
     }
 }

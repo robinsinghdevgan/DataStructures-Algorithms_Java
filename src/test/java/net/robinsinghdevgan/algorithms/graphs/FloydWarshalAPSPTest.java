@@ -1,14 +1,14 @@
-package net.robinsinghdevgan.algorithms.Graphs;
+package net.robinsinghdevgan.algorithms.graphs;
 
-import static com.google.common.truth.Truth.assertThat;
-
+import net.robinsinghdevgan.dataStructures.graphs.Graph;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-import net.robinsinghdevgan.dataStructures.Graphs.Graph;
+import static com.google.common.truth.Truth.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class FloydWarshalAPSPTest {
+
     private Graph<Integer> createGraphWithOnlyPositiveEdgeCosts() {
         var graph = new Graph<Integer>();
         for (int i = 0; i < 9; i++) {
@@ -59,6 +59,5 @@ public class FloydWarshalAPSPTest {
         graph = createGraphWithNegativeEdgeCosts();
         res = obj.allPairsShortestPath(graph);
         assertThat(res.get(0).get(8)).isEqualTo(Double.POSITIVE_INFINITY);
-
     }
 }

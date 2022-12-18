@@ -1,4 +1,4 @@
-package net.robinsinghdevgan.dataStructures.Graphs;
+package net.robinsinghdevgan.dataStructures.graphs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ public class Vertex<E extends Comparable<E>> {
     private E data;
     private List<Edge<E>> inDegree, outDegree;
 
-    Vertex(E data){
+    Vertex(E data) {
         this.data = data;
         inDegree = new ArrayList<>();
         outDegree = new ArrayList<>();
@@ -36,5 +36,4 @@ public class Vertex<E extends Comparable<E>> {
     public void setOutDegree(List<Edge<E>> outDegree) {
         this.outDegree = outDegree;
     }
-
 }

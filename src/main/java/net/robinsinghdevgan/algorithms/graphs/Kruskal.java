@@ -1,39 +1,27 @@
-package net.robinsinghdevgan.algorithms.Graphs;
+package net.robinsinghdevgan.algorithms.graphs;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import net.robinsinghdevgan.dataStructures.graphs.Edge;
+import net.robinsinghdevgan.dataStructures.graphs.Graph;
 
-import net.robinsinghdevgan.dataStructures.Graphs.Edge;
-import net.robinsinghdevgan.dataStructures.Graphs.Graph;
+import java.util.*;
 
 public class Kruskal<T extends Comparable<T>> {
-    class EdgeComparator implements Comparator<Edge<T>> {
-        @Override
-        public int compare(Edge<T> o1, Edge<T> o2) {
-            return o1.getCost().compareTo(o2.getCost());
-        }
-    }
 
     HashMap<T, Integer> indexMap;
     HashSet<Edge<T>> mstEdges;
 
     // and returns cost of MST
     public Double getMSP(Graph<T> graph) {
-        indexMap = new HashMap<T, Integer>();
-        mstEdges = new HashSet<Edge<T>>();
+        indexMap = new HashMap<>();
+        mstEdges = new HashSet<>();
 
         int i = 0;
-        for (var v : graph.vertices())
-            indexMap.put(v.getData(), i++);
+        for (var v : graph.vertices()) indexMap.put(v.getData(), i++);
         var mstCost = getMSPHelper(graph.getEdges(), graph.numberOfVertices());
 
         var edges = graph.getEdges();
         for (i = 0; i < edges.size(); i++) {
-            if (mstEdges.contains(edges.get(i)) == false)
-                graph.removeEdge(edges.get(i));
+            if (!mstEdges.contains(edges.get(i))) graph.removeEdge(edges.get(i));
         }
 
         System.out.println("MST Cost: " + mstCost);
@@ -45,19 +33,18 @@ public class Kruskal<T extends Comparable<T>> {
     }
 
     private Double getMSPHelper(List<Edge<T>> edges, int V) {
-        if (edges == null)
-            return null;
+        if (edges == null) return null;
 
         Double sum = 0.0;
-        Collections.sort(edges, new EdgeComparator());
+        edges.sort(new EdgeComparator());
 
         UnionFind uf = new UnionFind(V);
 
         for (var edge : edges) {
-
             // Skip this edge getTo() avoid creating a cycle in MST
-            if (uf.connected(indexMap.get(edge.getFrom()), indexMap.get(edge.getTo())))
-                continue;
+            if (
+                    uf.connected(indexMap.get(edge.getFrom()), indexMap.get(edge.getTo()))
+            ) continue;
 
             // Include this edge
             uf.union(indexMap.get(edge.getFrom()), indexMap.get(edge.getTo()));
@@ -66,21 +53,19 @@ public class Kruskal<T extends Comparable<T>> {
 
             // Optimization getTo() stop early if we found
             // a MST that includes all the nodes
-            if (uf.size(0) == V)
-                break;
+            if (uf.size(0) == V) break;
         }
 
         // Make sure we have a MST that includes all the nodes
-        if (uf.size(0) != V)
-            return null;
+        if (uf.size(0) != V) return null;
 
         return sum;
     }
 
     // Union find data structure
     static class UnionFind {
-
-        private int[] id, sz;
+        private final int[] id;
+        private final int[] sz;
 
         public UnionFind(int n) {
             id = new int[n];
@@ -93,8 +78,7 @@ public class Kruskal<T extends Comparable<T>> {
 
         public int find(int p) {
             int root = p;
-            while (root != id[root])
-                root = id[root];
+            while (root != id[root]) root = id[root];
             while (p != root) { // Do path compression
                 int next = id[p];
                 id[p] = root;
@@ -114,8 +98,7 @@ public class Kruskal<T extends Comparable<T>> {
         public void union(int p, int q) {
             int root1 = find(p);
             int root2 = find(q);
-            if (root1 == root2)
-                return;
+            if (root1 == root2) return;
             if (sz[root1] < sz[root2]) {
                 sz[root2] += sz[root1];
                 id[root1] = root2;
@@ -123,6 +106,14 @@ public class Kruskal<T extends Comparable<T>> {
                 sz[root1] += sz[root2];
                 id[root2] = root1;
             }
+        }
+    }
+
+    class EdgeComparator implements Comparator<Edge<T>> {
+
+        @Override
+        public int compare(Edge<T> o1, Edge<T> o2) {
+            return o1.getCost().compareTo(o2.getCost());
         }
     }
 }

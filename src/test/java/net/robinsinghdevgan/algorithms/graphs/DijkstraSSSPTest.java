@@ -1,16 +1,16 @@
-package net.robinsinghdevgan.algorithms.Graphs;
+package net.robinsinghdevgan.algorithms.graphs;
+
+import net.robinsinghdevgan.dataStructures.graphs.Graph;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 
 import java.util.HashMap;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-
-import net.robinsinghdevgan.dataStructures.Graphs.Graph;
-
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class DijkstraSSSPTest {
+
     private Graph<Integer> createGraph() {
         var graph = new Graph<Integer>();
         for (int i = 0; i < 9; i++) {
@@ -36,10 +36,10 @@ public class DijkstraSSSPTest {
     @Test
     public void test1() {
         var graph1 = createGraph();
-        System.out.println(graph1.toString());
+        System.out.println(graph1);
 
         var checkMap = new HashMap<Integer, String>();
-        checkMap.put(0, "[] and Costs: 0.0");
+        checkMap.put(0, "[] and Costs: Infinity");
         checkMap.put(1, "[0] and Costs: 4.0");
         checkMap.put(2, "[0, 1] and Costs: 12.0");
         checkMap.put(3, "[0, 1, 2] and Costs: 19.0");
@@ -52,10 +52,17 @@ public class DijkstraSSSPTest {
         Integer sourceVertex = 0;
         var obj = new DijkstraSSSP<Integer>();
         var distanceMap = obj.getShortestPath(graph1, sourceVertex);
-        assertThat(checkMap).isEqualTo(distanceMap);
-        
+        assertThat(distanceMap).isEqualTo(checkMap);
+
         for (var entry : distanceMap.entrySet()) {
-            System.out.println("Path from: '" + sourceVertex + "' to: " + entry.getKey() + " : " + entry.getValue());
+            System.out.println(
+                    "Path from: '" +
+                            sourceVertex +
+                            "' to: " +
+                            entry.getKey() +
+                            " : " +
+                            entry.getValue()
+            );
         }
     }
 }

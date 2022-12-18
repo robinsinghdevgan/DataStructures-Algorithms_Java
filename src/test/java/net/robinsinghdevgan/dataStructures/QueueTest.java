@@ -1,28 +1,29 @@
 package net.robinsinghdevgan.dataStructures;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Assertions;
-import java.util.ArrayList;
-import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.BeforeAll;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class QueueTest {
-
-    private List<Queue<Integer>> queues = new ArrayList<>();
+    private final List<Queue<Integer>> queues = new ArrayList<>();
 
     @BeforeAll
     public void setup() {
         //queues.add(new QueueUsingArray<Integer>(2));
-        queues.add(new QueueUsingSinglyLinkedList<Integer>());
+        queues.add(new QueueUsingSinglyLinkedList<>());
     }
 
     @Test
     public void testEmptyQueue() {
         for (var queue : queues) {
-            assertEquals(true, queue.isEmpty());
+            assertTrue(queue.isEmpty());
             assertEquals(0, queue.size());
         }
     }
@@ -30,9 +31,9 @@ public class QueueTest {
     @Test
     public void testExhaustively() {
         for (Queue<Integer> queue : queues) {
-            assertEquals(true, queue.isEmpty());
+            assertTrue(queue.isEmpty());
             queue.offer(1);
-            assertEquals(false, queue.isEmpty());
+            assertFalse(queue.isEmpty());
             queue.offer(2);
             assertEquals(2, queue.size());
             assertEquals(1, (int) queue.peek());
@@ -43,7 +44,7 @@ public class QueueTest {
             assertEquals(1, queue.size());
             assertEquals(2, (int) queue.poll());
             assertEquals(0, queue.size());
-            assertEquals(true, queue.isEmpty());
+            assertTrue(queue.isEmpty());
         }
     }
 
@@ -68,11 +69,14 @@ public class QueueTest {
 
     @Test
     public void testPeekOnEmpty() {
-        Assertions.assertThrows(Exception.class, () -> {
-            for (var queue : queues) {
-                queue.peek();
-            }
-        });
+        Assertions.assertThrows(
+                Exception.class,
+                () -> {
+                    for (var queue : queues) {
+                        queue.peek();
+                    }
+                }
+        );
     }
 
     @Test
@@ -86,10 +90,13 @@ public class QueueTest {
 
     @Test
     public void testPollOnEmpty() {
-        Assertions.assertThrows(Exception.class, () -> {
-            for (var queue : queues) {
-                queue.poll();
-            }
-        });
+        Assertions.assertThrows(
+                Exception.class,
+                () -> {
+                    for (var queue : queues) {
+                        queue.poll();
+                    }
+                }
+        );
     }
 }

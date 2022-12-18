@@ -1,13 +1,14 @@
-package net.robinsinghdevgan.algorithms.Graphs;
-import static com.google.common.truth.Truth.assertThat;
+package net.robinsinghdevgan.algorithms.graphs;
 
+import net.robinsinghdevgan.dataStructures.graphs.Graph;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-import net.robinsinghdevgan.dataStructures.Graphs.Graph;
+import static com.google.common.truth.Truth.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class DFSTest {
+
     private Graph<Integer> createGraph() {
         var graph = new Graph<Integer>();
         for (int i = 0; i < 9; i++) {
@@ -33,12 +34,12 @@ public class DFSTest {
     @Test
     public void test1() {
         var graph = createGraph();
-        System.out.println(graph.toString());
+        System.out.println(graph);
         var obj = new DFS<Integer>();
         var cost = obj.search(graph, 0, 8);
         assertThat(cost).isEqualTo(15.0);
         System.out.println(cost);
-        
+
         cost = obj.search(graph, 0, 6);
         assertThat(cost).isEqualTo(34.0);
         System.out.println(cost);

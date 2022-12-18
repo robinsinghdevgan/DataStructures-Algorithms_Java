@@ -1,16 +1,14 @@
 package net.robinsinghdevgan.dataStructures;
 
+import net.robinsinghdevgan.dataStructures.graphs.Graph;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import net.robinsinghdevgan.dataStructures.Graphs.Graph;
-
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-
 public class GraphTest {
-    
+
     private Graph<Integer> createGraph() {
         var graph = new Graph<Integer>();
         for (int i = 0; i < 9; i++) {
@@ -32,13 +30,14 @@ public class GraphTest {
         graph.addEdge(7, 8, 7.5);
         return graph;
     }
+
     @Test
     public void test1() {
         var graph1 = createGraph();
-        System.out.println(graph1.toString());
+        System.out.println(graph1);
         assertThat(graph1.numberOfVertices()).isEqualTo(9);
         graph1.removeVertex(8);
-        System.out.println(graph1.toString());
+        System.out.println(graph1);
         assertThat(graph1.numberOfVertices()).isEqualTo(8);
     }
 }

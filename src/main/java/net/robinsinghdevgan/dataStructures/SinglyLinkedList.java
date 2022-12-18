@@ -3,170 +3,8 @@ package net.robinsinghdevgan.dataStructures;
 import java.util.*;
 
 public class SinglyLinkedList<E> implements List<E> {
-    private static class Node<E> implements Iterator<Node<E>> {
-        private E data;
-        private Node<E> next;
-
-        public Node(E data) {
-            this.data = data;
-            this.next = null;
-        }
-
-        public Node(E data, Node<E> next) {
-            this.data = data;
-            this.next = next;
-        }
-
-        @Override
-        @SuppressWarnings({ "unchecked" })
-        public boolean equals(Object o) {
-            if (this == o)
-                return true;
-            if (o == null || getClass() != o.getClass())
-                return false;
-            Node<E> node;
-            try {
-                node = (Node<E>) o;
-                return getData().equals(node.getData());
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                return false;
-            }
-        }
-
-        public E getData() {
-            return data;
-        }
-
-        public Node<E> getNext() {
-            return next;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(getData());
-        }
-
-        @Override
-        public boolean hasNext() {
-            return getNext() != null;
-        }
-
-        public Iterator<Node<E>> iterator() {
-            return this;
-        }
-
-        @Override
-        public Node<E> next() {
-            return next;
-        }
-
-        public void setData(E data) {
-            this.data = data;
-        }
-
-        public void setNext(Node<E> next) {
-            this.next = next;
-        }
-
-        @Override
-        public String toString() {
-            return "Node{" + "data=" + data + ", next=" + next + '}';
-        }
-    }
-
-    private class ListItr implements ListIterator<E> {
-        private Node<E> lastReturned = null;
-        private Node<E> next;
-        private int nextIndex;
-
-        ListItr(int index) {
-            // assert isPositionIndex(index);
-            next = (index == size) ? null : getNode(index);
-            nextIndex = index;
-        }
-
-        public boolean hasNext() {
-            return nextIndex < size;
-        }
-
-        public E next() {
-            if (!hasNext())
-                throw new NoSuchElementException();
-
-            lastReturned = next;
-            next = next.next;
-            nextIndex++;
-            return lastReturned.data;
-        }
-
-        public int nextIndex() {
-            return nextIndex;
-        }
-
-        public int previousIndex() {
-            return nextIndex - 1;
-        }
-
-        public void remove() {
-            if (lastReturned == null)
-                throw new IllegalStateException();
-
-            Node<E> lastNext = lastReturned.next;
-            unlink(lastReturned);
-            if (next == lastReturned)
-                next = lastNext;
-            else
-                nextIndex--;
-            lastReturned = null;
-        }
-
-        public void set(E e) {
-            if (lastReturned == null)
-                throw new IllegalStateException();
-            lastReturned.data = e;
-        }
-
-        public void add(E e) {
-            Node<E> newElement;
-            try {
-                newElement = new Node<E>(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                return;
-            }
-            if (last != null) {
-                last.setNext(newElement);
-                last = newElement;
-            } else {
-                first = last = newElement;
-            }
-            ++size;
-            nextIndex++;
-        }
-
-        @Override
-        public boolean hasPrevious() {
-            if (lastReturned == first)
-                return false;
-            return true;
-        }
-
-        @Override
-        public E previous() {
-            if (lastReturned == first)
-                return null;
-            var prev = first;
-            while (prev.next != lastReturned) {
-                prev = prev.next;
-            }
-            lastReturned = prev;
-            return prev.data;
-        }
-    }
 
     private Node<E> first, last;
-
     private int size;
 
     public SinglyLinkedList() {
@@ -180,12 +18,11 @@ public class SinglyLinkedList<E> implements List<E> {
             add(t);
             return;
         }
-        if (i < 0 || i >= size)
-            throw new IndexOutOfBoundsException();
+        if (i < 0 || i >= size) throw new IndexOutOfBoundsException();
 
         var oldNode = this.getNode(i);
         var nextOfOldNode = oldNode.next();
-        Node<E> newNode = new Node<E>(t, nextOfOldNode);
+        Node<E> newNode = new Node<>(t, nextOfOldNode);
         oldNode.setNext(newNode);
         ++size;
     }
@@ -194,7 +31,7 @@ public class SinglyLinkedList<E> implements List<E> {
     public boolean add(E data) {
         Node<E> newElement;
         try {
-            newElement = new Node<E>(data);
+            newElement = new Node<>(data);
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;
@@ -211,11 +48,8 @@ public class SinglyLinkedList<E> implements List<E> {
 
     @Override
     public boolean addAll(Collection<? extends E> collection) {
-        if (collection.size() == 0)
-            return false;
-        var iterOfCollection = collection.iterator();
-        while (iterOfCollection.hasNext()) {
-            E data = (E) iterOfCollection.next();
+        if (collection.size() == 0) return false;
+        for (E data : collection) {
             this.add(data);
         }
         return true;
@@ -223,7 +57,7 @@ public class SinglyLinkedList<E> implements List<E> {
 
     @Override
     public boolean addAll(int i, Collection<? extends E> collection) {
-        SinglyLinkedList<E> newList = new SinglyLinkedList<E>();
+        SinglyLinkedList<E> newList = new SinglyLinkedList<>();
         newList.addAll(collection);
         Node<E> ithNode = getNode(i);
         Node<E> nextOfIthNode = ithNode.getNext();
@@ -234,7 +68,7 @@ public class SinglyLinkedList<E> implements List<E> {
 
     @Override
     public void clear() {
-        Node<E> iterator = first, prev = null;
+        Node<E> iterator = first, prev;
         while (iterator != null) {
             prev = iterator;
             iterator = iterator.getNext();
@@ -246,12 +80,11 @@ public class SinglyLinkedList<E> implements List<E> {
 
     @Override
     public boolean contains(Object o) {
-        @SuppressWarnings({ "unchecked" })
+        @SuppressWarnings({"unchecked"})
         Node<E> n = (Node<E>) o;
         Node<E> iterator = first;
         while (iterator != null) {
-            if (n == iterator)
-                return true;
+            if (n == iterator) return true;
             iterator = iterator.getNext();
         }
         return false;
@@ -260,8 +93,7 @@ public class SinglyLinkedList<E> implements List<E> {
     @Override
     public boolean containsAll(Collection<?> collection) {
         for (var item : collection) {
-            if (!this.contains(item))
-                return false;
+            if (!this.contains(item)) return false;
         }
         return true;
     }
@@ -275,8 +107,7 @@ public class SinglyLinkedList<E> implements List<E> {
         Node<E> iterator = first;
         E res = null;
         while (iterator != null) {
-            if (index++ == i)
-                return iterator.data;
+            if (index++ == i) return iterator.data;
             iterator = iterator.next();
         }
         return res;
@@ -291,14 +122,12 @@ public class SinglyLinkedList<E> implements List<E> {
     }
 
     public E getFirst() {
-        if (first == null)
-            return null;
+        if (first == null) return null;
         return first.data;
     }
 
     public E getLast() {
-        if (last == null)
-            return null;
+        if (last == null) return null;
         return last.data;
     }
 
@@ -321,7 +150,7 @@ public class SinglyLinkedList<E> implements List<E> {
 
     @Override
     public int indexOf(Object o) {
-        @SuppressWarnings({ "unchecked" })
+        @SuppressWarnings({"unchecked"})
         Node<E> n = (Node<E>) o;
         int idx = 0;
         Node<E> iterator = first;
@@ -348,13 +177,11 @@ public class SinglyLinkedList<E> implements List<E> {
     }
 
     @Override
-    @SuppressWarnings({ "unchecked" })
     public int lastIndexOf(Object o) {
         var n = first;
         int i = 0, res = -1;
         while (n != null) {
-            if (n == (Node<E>) o)
-                res = i;
+            if (n == o) res = i;
             ++i;
         }
         return res;
@@ -377,8 +204,7 @@ public class SinglyLinkedList<E> implements List<E> {
                 E currValue = first.getData();
                 first = first.getNext();
                 return currValue;
-            } else
-                return null;
+            } else return null;
         } else if (i == size() - 1) {
             Node<E> iter = first;
             while (iter.hasNext()) {
@@ -398,7 +224,7 @@ public class SinglyLinkedList<E> implements List<E> {
     }
 
     @Override
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings({"unchecked"})
     public boolean remove(Object o) {
         Node<E> n;
         try {
@@ -407,8 +233,7 @@ public class SinglyLinkedList<E> implements List<E> {
             while (iterator.hasNext() && iterator.next() != n) {
                 iterator = iterator.getNext();
             }
-            if (iterator().hasNext())
-                iterator.setNext(iterator.getNext().getNext());
+            if (iterator().hasNext()) iterator.setNext(iterator.getNext().getNext());
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -419,25 +244,23 @@ public class SinglyLinkedList<E> implements List<E> {
     @Override
     public boolean removeAll(Collection<?> collection) {
         for (Object object : collection) {
-            if (this.remove(object) == false)
-                return false;
+            if (!this.remove(object)) return false;
         }
         return true;
     }
 
     /* Reverses the linkedList
-        * returns a new linkedList with reverse order.
-    */
+     * returns a new linkedList with reverse order.
+     */
     public SinglyLinkedList<E> reverse() {
-        SinglyLinkedList<E> newList = null;
-        try{
-            java.util.Stack<E> stk = new java.util.Stack<E>();
-            Iterator<E> it = this.iterator();
-            while(it.hasNext()){
-                stk.push(it.next());
+        SinglyLinkedList<E> newList;
+        try {
+            java.util.Stack<E> stk = new java.util.Stack<>();
+            for (E e : this) {
+                stk.push(e);
             }
-            newList = new SinglyLinkedList<E>();
-            while(!stk.isEmpty()){
+            newList = new SinglyLinkedList<>();
+            while (!stk.isEmpty()) {
                 newList.add(stk.pop());
             }
             return newList;
@@ -447,12 +270,11 @@ public class SinglyLinkedList<E> implements List<E> {
         }
     }
 
-
     @Override
     public boolean retainAll(Collection<?> collection) {
         boolean listChanged = false;
         for (Object object : collection) {
-            if (this.contains(object) == false) {
+            if (!this.contains(object)) {
                 this.remove(object);
                 listChanged = true;
             }
@@ -475,11 +297,10 @@ public class SinglyLinkedList<E> implements List<E> {
 
     @Override
     public List<E> subList(int i, int i1) throws IndexOutOfBoundsException {
-        SinglyLinkedList<E> newList = new SinglyLinkedList<E>();
-        Node<E> start = this.getNode(i), end = this.getNode(i1);
-        Node<E> iter = start;
-        while (iter != end) {
-            newList.add(iter.getData());
+        SinglyLinkedList<E> newList = new SinglyLinkedList<>();
+        Node<E> end = this.getNode(i1);
+        while (this.getNode(i) != end) {
+            newList.add(this.getNode(i).getData());
         }
         return newList;
     }
@@ -499,15 +320,13 @@ public class SinglyLinkedList<E> implements List<E> {
     @Override
     @SuppressWarnings("unchecked")
     public <T> T[] toArray(T[] a) {
-        if (a.length < size)
-            a = (T[]) java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
+        if (a.length < size) a =
+                (T[]) java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
         int i = 0;
         Object[] result = a;
-        for (Node<E> x = first; x != null; x = x.next)
-            result[i++] = x.data;
+        for (Node<E> x = first; x != null; x = x.next) result[i++] = x.data;
 
-        if (a.length > size)
-            a[size] = null;
+        if (a.length > size) a[size] = null;
 
         return a;
     }
@@ -518,18 +337,17 @@ public class SinglyLinkedList<E> implements List<E> {
         sb.append("{");
         Node<E> iterator = first;
         while (iterator.next() != null) {
-            sb.append(iterator.getData().toString() + ",");
+            sb.append(iterator.getData().toString()).append(",");
             iterator = iterator.next();
         }
-        sb.append(iterator.getData().toString() + "}");
+        sb.append(iterator.getData().toString()).append("}");
         return sb.toString();
     }
 
     /**
      * Unlinks non-null node x.
      */
-    E unlink(Node<E> x) {
-
+    void unlink(Node<E> x) {
         final E element = x.data;
         final Node<E> next = x.next;
 
@@ -537,7 +355,7 @@ public class SinglyLinkedList<E> implements List<E> {
             first = first.next;
             x = null;
             size--;
-            return element;
+            return;
         }
 
         var iter = first;
@@ -548,15 +366,13 @@ public class SinglyLinkedList<E> implements List<E> {
         iter.setNext(next);
         x.data = null;
         size--;
-        return element;
     }
 
     /**
      * Unlinks last node
      */
     E unlinkLast() {
-        if (last == null)
-            throw new EmptyStackException();
+        if (last == null) throw new EmptyStackException();
         if (last == first) {
             E returnValue = first.getData();
             last = first = null;
@@ -578,15 +394,165 @@ public class SinglyLinkedList<E> implements List<E> {
     }
 
     public E unlinkFirst() {
-        if (first == null)
-            throw new EmptyStackException();
+        if (first == null) throw new EmptyStackException();
         E returnValue = first.data;
         var newFirst = first.next;
         first = null;
         --size;
         first = newFirst;
-        if(first == null)
-            last = null;
+        if (first == null) last = null;
         return returnValue;
+    }
+
+    private static class Node<E> implements Iterator<Node<E>> {
+        private E data;
+        private Node<E> next;
+
+        public Node(E data) {
+            this.data = data;
+            this.next = null;
+        }
+
+        public Node(E data, Node<E> next) {
+            this.data = data;
+            this.next = next;
+        }
+
+        @Override
+        @SuppressWarnings({"unchecked"})
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Node<E> node;
+            try {
+                node = (Node<E>) o;
+                return getData().equals(node.getData());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                return false;
+            }
+        }
+
+        public E getData() {
+            return data;
+        }
+
+        public void setData(E data) {
+            this.data = data;
+        }
+
+        public Node<E> getNext() {
+            return next;
+        }
+
+        public void setNext(Node<E> next) {
+            this.next = next;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(getData());
+        }
+
+        @Override
+        public boolean hasNext() {
+            return getNext() != null;
+        }
+
+        public Iterator<Node<E>> iterator() {
+            return this;
+        }
+
+        @Override
+        public Node<E> next() {
+            return next;
+        }
+
+        @Override
+        public String toString() {
+            return "Node{" + "data=" + data + ", next=" + next + '}';
+        }
+    }
+
+    private class ListItr implements ListIterator<E> {
+        private Node<E> lastReturned = null;
+        private Node<E> next;
+        private int nextIndex;
+
+        ListItr(int index) {
+            // assert isPositionIndex(index);
+            next = (index == size) ? null : getNode(index);
+            nextIndex = index;
+        }
+
+        public boolean hasNext() {
+            return nextIndex < size;
+        }
+
+        public E next() {
+            if (!hasNext()) throw new NoSuchElementException();
+
+            lastReturned = next;
+            next = next.next;
+            nextIndex++;
+            return lastReturned.data;
+        }
+
+        public int nextIndex() {
+            return nextIndex;
+        }
+
+        public int previousIndex() {
+            return nextIndex - 1;
+        }
+
+        public void remove() {
+            if (lastReturned == null) throw new IllegalStateException();
+
+            Node<E> lastNext = lastReturned.next;
+            unlink(lastReturned);
+            if (next == lastReturned) next = lastNext;
+            else nextIndex--;
+            lastReturned = null;
+        }
+
+        public void set(E e) {
+            if (lastReturned == null) throw new IllegalStateException();
+            lastReturned.data = e;
+        }
+
+        public void add(E e) {
+            Node<E> newElement;
+            try {
+                newElement = new Node<>(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                return;
+            }
+            if (last != null) {
+                last.setNext(newElement);
+                last = newElement;
+            } else {
+                first = last = newElement;
+            }
+            ++size;
+            nextIndex++;
+        }
+
+        @Override
+        public boolean hasPrevious() {
+            return lastReturned != first;
+        }
+
+        @Override
+        public E previous() {
+            if (lastReturned == first) return null;
+            var prev = first;
+            while (prev.next != lastReturned) {
+                prev = prev.next;
+            }
+            lastReturned = prev;
+            return prev.data;
+        }
     }
 }

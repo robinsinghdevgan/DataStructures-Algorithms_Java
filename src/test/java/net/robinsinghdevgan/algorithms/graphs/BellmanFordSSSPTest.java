@@ -1,16 +1,16 @@
-package net.robinsinghdevgan.algorithms.Graphs;
+package net.robinsinghdevgan.algorithms.graphs;
+
+import net.robinsinghdevgan.dataStructures.graphs.Graph;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 
 import java.util.HashMap;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-
-import net.robinsinghdevgan.dataStructures.Graphs.Graph;
-
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class BellmanFordSSSPTest {
+
     private Graph<Integer> createGraphWithOnlyPositiveEdgeCosts() {
         var graph = new Graph<Integer>();
         for (int i = 0; i < 9; i++) {
@@ -54,7 +54,7 @@ public class BellmanFordSSSPTest {
     @Test
     public void testGraphWithOnlyPositiveEdgeCosts() {
         var graph1 = createGraphWithOnlyPositiveEdgeCosts();
-        System.out.println(graph1.toString());
+        System.out.println(graph1);
 
         var checkMap = new HashMap<Integer, String>();
         checkMap.put(0, "[] and Costs: 0.0");
@@ -73,14 +73,21 @@ public class BellmanFordSSSPTest {
         assertThat(distanceMap).isEqualTo(checkMap);
 
         for (var entry : distanceMap.entrySet()) {
-            System.out.println("Path from: '" + sourceVertex + "' to: " + entry.getKey() + " : " + entry.getValue());
+            System.out.println(
+                    "Path from: '" +
+                            sourceVertex +
+                            "' to: " +
+                            entry.getKey() +
+                            " : " +
+                            entry.getValue()
+            );
         }
     }
 
     @Test
     public void testGraphWithOnlyNegativeEdgeCosts() {
         var graph1 = createGraphWithNegativeEdgeCosts();
-        System.out.println(graph1.toString());
+        System.out.println(graph1);
 
         Integer sourceVertex = 0;
         var obj = new BellmanFordSSSP<Integer>();
@@ -89,7 +96,13 @@ public class BellmanFordSSSPTest {
         System.out.println("Null path with Infinite cost represents a negative Cycle.");
         for (var entry : distanceMap.entrySet()) {
             System.out.println(
-                    "Shortest Path from: '" + sourceVertex + "' to: " + entry.getKey() + " : " + entry.getValue());
+                    "Shortest Path from: '" +
+                            sourceVertex +
+                            "' to: " +
+                            entry.getKey() +
+                            " : " +
+                            entry.getValue()
+            );
         }
 
         var checkMap = new HashMap<Integer, String>();
@@ -104,6 +117,5 @@ public class BellmanFordSSSPTest {
         checkMap.put(8, "[] and Costs: Infinity");
 
         assertThat(distanceMap).isEqualTo(checkMap);
-
     }
 }

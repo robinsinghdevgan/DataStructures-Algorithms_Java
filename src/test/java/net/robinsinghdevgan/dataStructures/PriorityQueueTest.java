@@ -1,18 +1,40 @@
 package net.robinsinghdevgan.dataStructures;
 
-import static com.google.common.truth.Truth.assertThat;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import static com.google.common.truth.Truth.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class PriorityQueueTest {
     static final int LOOPS = 100;
     static final int MAX_SZ = 100;
+
+    static Integer[] genRandArray(int sz) {
+        Integer[] lst = new Integer[sz];
+        for (int i = 0; i < sz; i++) lst[i] = (int) (Math.random() * MAX_SZ);
+        return lst;
+    }
+
+    // Generate a list of random numbers
+    static List<Integer> genRandList(int sz) {
+        List<Integer> lst = new ArrayList<>(sz);
+        for (int i = 0; i < sz; i++) lst.add((int) (Math.random() * MAX_SZ));
+        return lst;
+    }
+
+    // Generate a list of unique random numbers
+    static List<Integer> genUniqueRandList() {
+        List<Integer> lst = new ArrayList<>(PriorityQueueTest.LOOPS);
+        for (int i = 0; i < PriorityQueueTest.LOOPS; i++) lst.add(i);
+        Collections.shuffle(lst);
+        return lst;
+    }
 
     @Test
     public void testEmpty() {
@@ -25,35 +47,28 @@ public class PriorityQueueTest {
 
     @Test
     public void testHeapProperty() {
-
         PriorityQueue<Integer> q = new PriorityQueue<>();
-        Integer[] nums = { 3, 2, 5, 6, 7, 9, 4, 8, 1 };
+        Integer[] nums = {3, 2, 5, 6, 7, 9, 4, 8, 1};
 
         // Try manually creating heap
-        for (int n : nums)
-            q.add(n);
-        for (int i = 1; i <= 9; i++)
-            assertThat(q.poll()).isEqualTo(i);
+        for (int n : nums) q.add(n);
+        for (int i = 1; i <= 9; i++) assertThat(q.poll()).isEqualTo(i);
 
         q.clear();
 
         // Try heapify constructor
         q = new PriorityQueue<>(nums);
-        for (int i = 1; i <= 9; i++)
-            assertThat(q.poll()).isEqualTo(i);
+        for (int i = 1; i <= 9; i++) assertThat(q.poll()).isEqualTo(i);
     }
 
     @Test
     public void testHeapify() {
-
         for (int i = 1; i < LOOPS; i++) {
-
             Integer[] lst = genRandArray(i);
             PriorityQueue<Integer> pq = new PriorityQueue<>(lst);
 
             java.util.PriorityQueue<Integer> pq2 = new java.util.PriorityQueue<>(i);
-            for (int x : lst)
-                pq2.add(x);
+            pq2.addAll(Arrays.asList(lst));
 
             assertThat(pq.isMinHeap(0)).isTrue();
             while (!pq2.isEmpty()) {
@@ -64,9 +79,8 @@ public class PriorityQueueTest {
 
     @Test
     public void testClear() {
-
         PriorityQueue<String> q;
-        String[] strs = { "aa", "bb", "cc", "dd", "ee" };
+        String[] strs = {"aa", "bb", "cc", "dd", "ee"};
         q = new PriorityQueue<>(strs);
         q.clear();
         assertThat(q.size()).isEqualTo(0);
@@ -75,8 +89,7 @@ public class PriorityQueueTest {
 
     @Test
     public void testContainment() {
-
-        String[] strs = { "aa", "bb", "cc", "dd", "ee" };
+        String[] strs = {"aa", "bb", "cc", "dd", "ee"};
         PriorityQueue<String> q = new PriorityQueue<>(strs);
         q.remove("aa");
         assertThat(q.contains("aa")).isFalse();
@@ -92,20 +105,16 @@ public class PriorityQueueTest {
 
     @Test
     public void testContainmentRandomized() {
-
         for (int i = 0; i < LOOPS; i++) {
-
             List<Integer> randNums = genRandList(100);
             java.util.PriorityQueue<Integer> PQ = new java.util.PriorityQueue<>();
             PriorityQueue<Integer> pq = new PriorityQueue<>();
-            for (int j = 0; j < randNums.size(); j++) {
-                pq.add(randNums.get(j));
-                PQ.add(randNums.get(j));
+            for (Integer randNum : randNums) {
+                pq.add(randNum);
+                PQ.add(randNum);
             }
 
-            for (int j = 0; j < randNums.size(); j++) {
-
-                int randVal = randNums.get(j);
+            for (int randVal : randNums) {
                 assertThat(pq.contains(randVal)).isEqualTo(PQ.contains(randVal));
                 pq.remove(randVal);
                 PQ.remove(randVal);
@@ -115,20 +124,15 @@ public class PriorityQueueTest {
     }
 
     public void sequentialRemoving(Integer[] in, Integer[] removeOrder) {
-
         assertThat(in.length).isEqualTo(removeOrder.length);
 
         PriorityQueue<Integer> pq = new PriorityQueue<>(in);
         java.util.PriorityQueue<Integer> PQ = new java.util.PriorityQueue<>();
-        for (int value : in)
-            PQ.offer(value);
+        for (int value : in) PQ.offer(value);
 
         assertThat(pq.isMinHeap(0)).isTrue();
 
-        for (int i = 0; i < removeOrder.length; i++) {
-
-            int elem = removeOrder[i];
-
+        for (int elem : removeOrder) {
             assertThat(pq.peek()).isEqualTo(PQ.peek());
             assertThat(pq.remove(elem)).isEqualTo(PQ.remove(elem));
             assertThat(pq.size()).isEqualTo(PQ.size());
@@ -140,32 +144,30 @@ public class PriorityQueueTest {
 
     @Test
     public void testRemoving() {
-
-        Integer[] in = { 1, 2, 3, 4, 5, 6, 7 };
-        Integer[] removeOrder = { 1, 3, 6, 4, 5, 7, 2 };
+        Integer[] in = {1, 2, 3, 4, 5, 6, 7};
+        Integer[] removeOrder = {1, 3, 6, 4, 5, 7, 2};
         sequentialRemoving(in, removeOrder);
 
-        in = new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
-        removeOrder = new Integer[] { 7, 4, 6, 10, 2, 5, 11, 3, 1, 8, 9 };
+        in = new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+        removeOrder = new Integer[]{7, 4, 6, 10, 2, 5, 11, 3, 1, 8, 9};
         sequentialRemoving(in, removeOrder);
 
-        in = new Integer[] { 8, 1, 3, 3, 5, 3 };
-        removeOrder = new Integer[] { 3, 3, 5, 8, 1, 3 };
+        in = new Integer[]{8, 1, 3, 3, 5, 3};
+        removeOrder = new Integer[]{3, 3, 5, 8, 1, 3};
         sequentialRemoving(in, removeOrder);
 
-        in = new Integer[] { 7, 7, 3, 1, 1, 2 };
-        removeOrder = new Integer[] { 2, 7, 1, 3, 7, 1 };
+        in = new Integer[]{7, 7, 3, 1, 1, 2};
+        removeOrder = new Integer[]{2, 7, 1, 3, 7, 1};
         sequentialRemoving(in, removeOrder);
 
-        in = new Integer[] { 32, 66, 93, 42, 41, 91, 54, 64, 9, 35 };
-        removeOrder = new Integer[] { 64, 93, 54, 41, 35, 9, 66, 42, 32, 91 };
+        in = new Integer[]{32, 66, 93, 42, 41, 91, 54, 64, 9, 35};
+        removeOrder = new Integer[]{64, 93, 54, 41, 35, 9, 66, 42, 32, 91};
         sequentialRemoving(in, removeOrder);
     }
 
     @Test
     public void testRemovingDuplicates() {
-
-        Integer[] in = new Integer[] { 2, 7, 2, 11, 7, 13, 2 };
+        Integer[] in = new Integer[]{2, 7, 2, 11, 7, 13, 2};
         PriorityQueue<Integer> pq = new PriorityQueue<>(in);
 
         assertThat(pq.peek()).isEqualTo(2);
@@ -183,11 +185,8 @@ public class PriorityQueueTest {
 
     @Test
     public void testRandomizedPolling() {
-
         for (int i = 0; i < LOOPS; i++) {
-
-            int sz = i;
-            List<Integer> randNums = genRandList(sz);
+            List<Integer> randNums = genRandList(i);
             java.util.PriorityQueue<Integer> pq1 = new java.util.PriorityQueue<>();
             PriorityQueue<Integer> pq2 = new PriorityQueue<>();
 
@@ -198,7 +197,6 @@ public class PriorityQueueTest {
             }
 
             while (!pq1.isEmpty()) {
-
                 assertThat(pq2.isMinHeap(0)).isTrue();
                 assertThat(pq1.size()).isEqualTo(pq2.size());
                 assertThat(pq1.peek()).isEqualTo(pq2.peek());
@@ -217,11 +215,8 @@ public class PriorityQueueTest {
 
     @Test
     public void testRandomizedRemoving() {
-
         for (int i = 0; i < LOOPS; i++) {
-
-            int sz = i;
-            List<Integer> randNums = genRandList(sz);
+            List<Integer> randNums = genRandList(i);
             java.util.PriorityQueue<Integer> pq1 = new java.util.PriorityQueue<>();
             PriorityQueue<Integer> pq2 = new PriorityQueue<>();
 
@@ -235,7 +230,6 @@ public class PriorityQueueTest {
             int index = 0;
 
             while (!pq1.isEmpty()) {
-
                 int removeNum = randNums.get(index++);
 
                 assertThat(pq2.isMinHeap(0)).isTrue();
@@ -252,14 +246,12 @@ public class PriorityQueueTest {
 
     @Test
     public void testPQReusability() {
-
-        List<Integer> SZs = genUniqueRandList(LOOPS);
+        List<Integer> SZs = genUniqueRandList();
 
         java.util.PriorityQueue<Integer> PQ = new java.util.PriorityQueue<>();
         PriorityQueue<Integer> pq = new PriorityQueue<>();
 
         for (int sz : SZs) {
-
             pq.clear();
             PQ.clear();
 
@@ -272,7 +264,6 @@ public class PriorityQueueTest {
             Collections.shuffle(nums);
 
             for (int i = 0; i < sz / 2; i++) {
-
                 // Sometimes add a new number into the PriorityQueue
                 if (0.25 < Math.random()) {
                     int randNum = (int) (Math.random() * 10000);
@@ -294,29 +285,5 @@ public class PriorityQueueTest {
                 assertThat(pq.isMinHeap(0)).isTrue();
             }
         }
-    }
-
-    static Integer[] genRandArray(int sz) {
-        Integer[] lst = new Integer[sz];
-        for (int i = 0; i < sz; i++)
-            lst[i] = (int) (Math.random() * MAX_SZ);
-        return lst;
-    }
-
-    // Generate a list of random numbers
-    static List<Integer> genRandList(int sz) {
-        List<Integer> lst = new ArrayList<>(sz);
-        for (int i = 0; i < sz; i++)
-            lst.add((int) (Math.random() * MAX_SZ));
-        return lst;
-    }
-
-    // Generate a list of unique random numbers
-    static List<Integer> genUniqueRandList(int sz) {
-        List<Integer> lst = new ArrayList<>(sz);
-        for (int i = 0; i < sz; i++)
-            lst.add(i);
-        Collections.shuffle(lst);
-        return lst;
     }
 }

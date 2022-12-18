@@ -1,19 +1,13 @@
-package net.robinsinghdevgan.algorithms.Graphs;
+package net.robinsinghdevgan.algorithms.graphs;
+
+import net.robinsinghdevgan.dataStructures.graphs.Edge;
+import net.robinsinghdevgan.dataStructures.graphs.Graph;
 
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 
-import net.robinsinghdevgan.dataStructures.Graphs.Edge;
-import net.robinsinghdevgan.dataStructures.Graphs.Graph;
-
 public class Prims<T extends Comparable<T>> {
-    class EdgeComparator implements Comparator<Edge<T>> {
-        @Override
-        public int compare(Edge<T> o1, Edge<T> o2) {
-            return o1.getCost().compareTo(o2.getCost());
-        }
-    }
 
     PriorityQueue<Edge<T>> pq;
     HashSet<T> visited;
@@ -22,8 +16,7 @@ public class Prims<T extends Comparable<T>> {
     private void addEdges(Graph<T> graph, T node) {
         visited.add(node);
         for (var e : graph.getVertex(node).getOutDegreeEdges()) {
-            if (!visited.contains(e.getTo()))
-                pq.offer(e);
+            if (!visited.contains(e.getTo())) pq.offer(e);
         }
     }
 
@@ -33,13 +26,14 @@ public class Prims<T extends Comparable<T>> {
         int V = graph.numberOfVertices();
         int E = graph.numberOfEdges();
 
-        if (E < V - 1)
-            throw new IllegalArgumentException("The graph does not have all nodes connected");
+        if (E < V - 1) throw new IllegalArgumentException(
+                "The graph does not have all nodes connected"
+        );
 
         // create priority queue
         pq = new PriorityQueue<>(E, new EdgeComparator());
-        visited = new HashSet<T>();
-        mstEdges = new HashSet<Edge<T>>();
+        visited = new HashSet<>();
+        mstEdges = new HashSet<>();
         addEdges(graph, source);
 
         int m = V - 1; // number of edges in mst
@@ -48,8 +42,7 @@ public class Prims<T extends Comparable<T>> {
 
         while (!pq.isEmpty() && edgeCount != m) {
             var e = pq.poll();
-            if (visited.contains(e.getTo()))
-                continue;
+            if (visited.contains(e.getTo())) continue;
 
             addEdges(graph, e.getTo());
             ++edgeCount;
@@ -62,11 +55,18 @@ public class Prims<T extends Comparable<T>> {
                 graph.removeEdge(edges.get(i));
         }
 
-        
         System.out.println("MST Cost: " + mstCost);
-        for(var e : mstEdges) {
+        for (var e : mstEdges) {
             System.out.println("MST Edge: " + e);
         }
         return mstCost;
+    }
+
+    class EdgeComparator implements Comparator<Edge<T>> {
+
+        @Override
+        public int compare(Edge<T> o1, Edge<T> o2) {
+            return o1.getCost().compareTo(o2.getCost());
+        }
     }
 }

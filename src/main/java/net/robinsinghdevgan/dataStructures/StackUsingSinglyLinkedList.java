@@ -5,34 +5,31 @@ import java.util.EmptyStackException;
 public class StackUsingSinglyLinkedList<E> {
     private int size = 0;
     private int top = -1;
-    private SinglyLinkedList<E> list = null;
+    private SinglyLinkedList<E> list;
 
     public StackUsingSinglyLinkedList() {
-        list = new SinglyLinkedList<E>();
+        list = new SinglyLinkedList<>();
     }
 
-    public E push(E item) throws StackOverflowError{
+    public void push(E item) throws StackOverflowError {
         list.add(item);
         ++top;
         ++size;
-        return item;
     }
 
     public boolean isFull() {
-        return top == size-1;
+        return top == size - 1;
     }
 
     public E pop() {
-        if(this.isEmpty())
-            throw new EmptyStackException();
+        if (this.isEmpty()) throw new EmptyStackException();
         --top;
         --size;
         return list.unlinkLast();
     }
 
     public E peek() {
-        if(this.isEmpty())
-            throw new EmptyStackException();
+        if (this.isEmpty()) throw new EmptyStackException();
         return list.getLast();
     }
 
@@ -60,5 +57,4 @@ public class StackUsingSinglyLinkedList<E> {
     public String toString() {
         return list.toString();
     }
-    
 }
