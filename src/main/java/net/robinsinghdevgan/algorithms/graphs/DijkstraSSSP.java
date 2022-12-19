@@ -33,7 +33,7 @@ public class DijkstraSSSP<V extends Comparable<V>> {
 
     // DijkstraSingleSourceShortestPath
     public Map<V, String> getShortestPath(Graph<V> graph, V source) {
-        //Let V be the number of vertices
+
         int numberOfVertices = graph.numberOfVertices();
 
         /* The priority-queue */
