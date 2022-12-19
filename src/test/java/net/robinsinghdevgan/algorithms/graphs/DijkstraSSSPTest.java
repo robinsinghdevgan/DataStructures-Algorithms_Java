@@ -9,7 +9,7 @@ import java.util.HashMap;
 import static com.google.common.truth.Truth.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class DijkstraSSSPTest {
+class DijkstraSSSPTest {
 
     private Graph<Integer> createGraph() {
         var graph = new Graph<Integer>();
@@ -34,12 +34,12 @@ public class DijkstraSSSPTest {
     }
 
     @Test
-    public void test1() {
+    void test1() {
         var graph1 = createGraph();
         System.out.println(graph1);
 
         var checkMap = new HashMap<Integer, String>();
-        checkMap.put(0, "[] and Costs: Infinity");
+        checkMap.put(0, "[] and Costs: 0.0");
         checkMap.put(1, "[0] and Costs: 4.0");
         checkMap.put(2, "[0, 1] and Costs: 12.0");
         checkMap.put(3, "[0, 1, 2] and Costs: 19.0");

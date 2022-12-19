@@ -48,12 +48,13 @@ public class DijkstraSSSP<V extends Comparable<V>> {
         /* The distance-map */
         //Create a map to store distance to each vertex from the source
         var mapOfDistanceToVertex = new HashMap<V, Double>();
-        //The distance of source to source is 0.0
-        mapOfDistanceToVertex.put(source, 0.0);
+
         //In the beginning, the distance to every vertex apart from the source is unknown, therefore POSITIVE_INFINITY
         for (var vertex : graph.vertices()) {
             mapOfDistanceToVertex.put(vertex.getData(), Double.POSITIVE_INFINITY);
         }
+        //The distance of source to source is 0.0
+        mapOfDistanceToVertex.put(source, 0.0);
 
         var mapOfConnections = new HashMap<V, V>();
 
@@ -66,19 +67,23 @@ public class DijkstraSSSP<V extends Comparable<V>> {
             );
             var listOfEdges = v.getOutDegreeEdges();
             for (var edge : listOfEdges) {
+
+                V startingVertexOfThisEdge = edge.getFrom();
+                V endingVertexOfThisEdge = edge.getTo();
+
                 //calculate new distance
                 double newDist = distOfv + edge.getCost();
 
                 //if newDist is cheaper than older distance
-                if (newDist < mapOfDistanceToVertex.get(edge.getTo())) {
+                if (newDist < mapOfDistanceToVertex.get(endingVertexOfThisEdge)) {
                     // update distance-map with the new distance to this node
-                    mapOfDistanceToVertex.put(edge.getTo(), newDist);
+                    mapOfDistanceToVertex.put(endingVertexOfThisEdge, newDist);
 
                     //update connection to this node with this edge
-                    mapOfConnections.put(edge.getTo(), edge.getFrom());
+                    mapOfConnections.put(endingVertexOfThisEdge, startingVertexOfThisEdge);
 
                     // update PQ with the new distance to this node
-                    pq.offer(new DistanceToVertexFromSource(edge.getTo(), newDist));
+                    pq.offer(new DistanceToVertexFromSource(endingVertexOfThisEdge, newDist));
                 }
             }
         }
