@@ -2,71 +2,83 @@ package net.robinsinghdevgan.algorithms.graphs;
 
 import net.robinsinghdevgan.dataStructures.graphs.Edge;
 import net.robinsinghdevgan.dataStructures.graphs.Graph;
+import net.robinsinghdevgan.dataStructures.graphs.Vertex;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
-public class BellmanFordSSSP<E extends Comparable<E>> {
+public class BellmanFordSSSP<V extends Comparable<V>> {
 
     private List<String> reconstructPath(
-            HashMap<E, Double> distance,
-            HashMap<E, E> prev,
-            E dest
+            HashMap<V, Double> distance,
+            HashMap<V, V> mapOfConnections,
+            V dest
     ) {
         List<String> path = new ArrayList<>();
         if (
                 distance.get(dest) == 0.0 || distance.get(dest) == Double.NEGATIVE_INFINITY
         ) return path;
-        var at = prev.get(dest);
-        while (at != null) {
-            path.add(at.toString());
-            at = prev.get(at);
+        V connectedVertex = mapOfConnections.get(dest);
+        while (connectedVertex != null) {
+            path.add(connectedVertex.toString());
+            connectedVertex = mapOfConnections.get(connectedVertex);
         }
         Collections.reverse(path);
         return path;
     }
 
-    public HashMap<E, String> getShortestPath(Graph<E> graph, E source) {
-        int V = graph.numberOfVertices();
-        int iterations = V - 1;
+    public Map<V, String> getShortestPath(Graph<V> graph, V source) {
+        int numberOfVertices = graph.numberOfVertices();
+        int iterations = numberOfVertices - 1;
 
-        var distCost = new HashMap<E, Double>();
-        var prev = new HashMap<E, E>();
-        for (var vertex : graph.vertices()) {
+        var distCost = new HashMap<V, Double>();
+
+        //In the beginning, the distance to every vertex apart from the source is unknown, therefore POSITIVE_INFINITY
+        for (Vertex<V> vertex : graph.vertices()) {
             distCost.put(vertex.getData(), Double.POSITIVE_INFINITY);
         }
+        //The distance of source to source is 0.0
         distCost.put(source, 0.0);
 
+        var mapOfConnections = new HashMap<V, V>();
+
         // For each vertex, apply relaxation for all the edges
-        for (int i = 0; i < iterations; i++)
-            for (Edge<E> edge : graph.getEdges())
-                if (
-                        distCost.get(edge.getFrom()) + edge.getCost() < distCost.get(edge.getTo())
-                ) {
-                    distCost.put(edge.getTo(), distCost.get(edge.getFrom()) + edge.getCost());
-                    prev.put(edge.getTo(), edge.getFrom());
+        for (int i = 0; i < iterations; i++) {
+            for (Edge<V> edge : graph.getEdges()) {
+
+                V startingVertexOfThisEdge = edge.getFrom();
+                V endingVertexOfThisEdge = edge.getTo();
+                //calculate new distance
+                Double newCalculatedDistance = distCost.get(startingVertexOfThisEdge) + edge.getCost();
+
+                //if newCalculatedDistance is cheaper than older distance
+                if (newCalculatedDistance < distCost.get(endingVertexOfThisEdge)) {
+                    // update distance-map with the new distance to this node
+                    distCost.put(endingVertexOfThisEdge, newCalculatedDistance);
+                    //update connection to this node with this edge
+                    mapOfConnections.put(endingVertexOfThisEdge, startingVertexOfThisEdge);
                 }
+            }
+        }
 
         // Run algorithm a second time to detect which nodes are part
         // of a negative cycle. A negative cycle has occurred if we
         // can find a better path beyond the optimal solution.
-        for (int i = 0; i < iterations; i++)
-            for (Edge<E> edge : graph.getEdges())
-                if (
-                        distCost.get(edge.getFrom()) + edge.getCost() < distCost.get(edge.getTo())
-                ) {
+        for (int i = 0; i < iterations; i++) {
+            for (Edge<V> edge : graph.getEdges()) {
+                Double newCalculatedDistance = distCost.get(edge.getFrom()) + edge.getCost();
+                if (newCalculatedDistance < distCost.get(edge.getTo())) {
                     distCost.put(edge.getTo(), Double.NEGATIVE_INFINITY);
-                    prev.put(edge.getTo(), edge.getFrom());
+                    mapOfConnections.put(edge.getTo(), edge.getFrom());
                 }
+            }
+        }
 
         // Return the array containing the shortest distance to every node
-        var result = new HashMap<E, String>();
+        var result = new HashMap<V, String>();
         for (var dist : distCost.entrySet()) {
             result.put(
                     dist.getKey(),
-                    reconstructPath(distCost, prev, dist.getKey()) +
+                    reconstructPath(distCost, mapOfConnections, dist.getKey()) +
                             " and Costs: " +
                             dist.getValue().toString()
             );
