@@ -1,4 +1,4 @@
-package net.robinsinghdevgan.dataStructures;
+package net.robinsinghdevgan.data_structures;
 
 import java.util.ArrayList;
 import java.util.List;

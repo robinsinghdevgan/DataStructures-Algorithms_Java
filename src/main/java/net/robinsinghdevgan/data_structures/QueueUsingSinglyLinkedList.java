@@ -1,4 +1,4 @@
-package net.robinsinghdevgan.dataStructures;
+package net.robinsinghdevgan.data_structures;
 
 public class QueueUsingSinglyLinkedList<E> implements Queue<E> {
     private final SinglyLinkedList<E> list;

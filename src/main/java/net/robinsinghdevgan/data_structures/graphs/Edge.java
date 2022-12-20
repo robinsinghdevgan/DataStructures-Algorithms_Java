@@ -1,4 +1,4 @@
-package net.robinsinghdevgan.dataStructures.graphs;
+package net.robinsinghdevgan.data_structures.graphs;
 
 public class Edge<Vertex extends Comparable<Vertex>> {
     Vertex from, to;

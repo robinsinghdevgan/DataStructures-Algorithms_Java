@@ -1,7 +1,7 @@
 package net.robinsinghdevgan.algorithms.graphs;
 
-import net.robinsinghdevgan.dataStructures.graphs.Edge;
-import net.robinsinghdevgan.dataStructures.graphs.Graph;
+import net.robinsinghdevgan.data_structures.graphs.Edge;
+import net.robinsinghdevgan.data_structures.graphs.Graph;
 
 import java.util.Comparator;
 import java.util.HashSet;
@@ -51,7 +51,7 @@ public class Prims<T extends Comparable<T>> {
         }
         var edges = graph.getEdges();
         for (int i = 0; i < edges.size(); i++) {
-            if (mstEdges.contains(edges.get(i)) == false)
+            if (!mstEdges.contains(edges.get(i)))
                 graph.removeEdge(edges.get(i));
         }
 

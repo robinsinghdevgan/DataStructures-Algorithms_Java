@@ -1,6 +1,6 @@
 package net.robinsinghdevgan.algorithms.graphs;
 
-import net.robinsinghdevgan.dataStructures.graphs.Graph;
+import net.robinsinghdevgan.data_structures.graphs.Graph;
 
 import java.util.*;
 
@@ -62,7 +62,7 @@ public class DijkstraSSSP<V extends Comparable<V>> {
             DistanceToVertexFromSource pqe = pq.poll();
             V vertexValue = pqe.source;
             Double distOfv = pqe.cost;
-            net.robinsinghdevgan.dataStructures.graphs.Vertex<V> v = graph.getVertex(
+            net.robinsinghdevgan.data_structures.graphs.Vertex<V> v = graph.getVertex(
                     vertexValue
             );
             var listOfEdges = v.getOutDegreeEdges();

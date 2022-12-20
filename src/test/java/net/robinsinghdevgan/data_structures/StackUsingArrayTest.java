@@ -1,4 +1,4 @@
-package net.robinsinghdevgan.dataStructures;
+package net.robinsinghdevgan.data_structures;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -10,18 +10,19 @@ import java.util.EmptyStackException;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class StackUsingSinglyLinkedListTest {
-    private StackUsingSinglyLinkedList<String> s;
+public class StackUsingArrayTest {
+    private final int size = 15;
+    private StackUsingArray<String> s;
 
     @BeforeAll
     public void setup() {
-        s = new StackUsingSinglyLinkedList<>();
+        s = new StackUsingArray<>(size);
     }
 
     @Test
     public void test1() {
         assertTrue(s.isEmpty());
-        assertEquals(0, s.getSize());
+        assertEquals(15, s.getSize());
         s.push("a");
         assertFalse(s.isEmpty());
         assertEquals("a", s.peek());
@@ -30,15 +31,12 @@ public class StackUsingSinglyLinkedListTest {
     }
 
     @Test
-    //@Disabled
     public void test2() {
-        //s = new StackUsingSinglyLinkedList<String>();
-        assertTrue(s.isEmpty());
         String[] x = {"a", "b", "c", "d"};
-        for (int i = 0; i < x.length; i++) {
-            s.push(x[i]);
-            assertEquals(i + 1, s.getSize());
-            assertEquals(x[i], s.peek());
+        for (String value : x) {
+            s.push(value);
+            assertEquals(size, s.getSize());
+            assertEquals(value, s.peek());
         }
 
         for (int i = x.length - 1; i >= 0; i--) {

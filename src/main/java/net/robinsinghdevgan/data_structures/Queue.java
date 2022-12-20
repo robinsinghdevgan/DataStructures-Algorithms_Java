@@ -1,4 +1,4 @@
-package net.robinsinghdevgan.dataStructures;
+package net.robinsinghdevgan.data_structures;
 
 /**
  * @param <E> the type of element held int the queue

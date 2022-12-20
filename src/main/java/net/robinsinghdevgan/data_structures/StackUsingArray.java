@@ -1,11 +1,11 @@
-package net.robinsinghdevgan.dataStructures;
+package net.robinsinghdevgan.data_structures;
 
 import java.util.EmptyStackException;
 
 public class StackUsingArray<E> {
     private int size;
     private int top = -1;
-    private Object[] array;
+    private final Object[] array;
 
     public StackUsingArray(int size) {
         this.size = size;

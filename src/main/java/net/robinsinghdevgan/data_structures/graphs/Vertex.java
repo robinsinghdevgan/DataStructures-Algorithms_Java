@@ -1,4 +1,4 @@
-package net.robinsinghdevgan.dataStructures.graphs;
+package net.robinsinghdevgan.data_structures.graphs;
 
 import java.util.ArrayList;
 import java.util.List;

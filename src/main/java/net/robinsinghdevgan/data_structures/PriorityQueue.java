@@ -1,5 +1,5 @@
 //Reference: https://github.com/williamfiset/Algorithms/blob/master/src/main/java/com/williamfiset/algorithms/datastructures/priorityqueue/BinaryHeap.java
-package net.robinsinghdevgan.dataStructures;
+package net.robinsinghdevgan.data_structures;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,7 +8,7 @@ import java.util.List;
 
 public class PriorityQueue<T extends Comparable<T>> {
     // A dynamic list to track the elements inside the heap
-    private List<T> heap;
+    private final List<T> heap;
 
     // Construct and initially empty priority queue
     public PriorityQueue() {
@@ -141,11 +141,11 @@ public class PriorityQueue<T extends Comparable<T>> {
 
     // Swap two nodes. Assumes i & j are valid, O(1)
     private void swap(int i, int j) {
-        T elem_i = heap.get(i);
-        T elem_j = heap.get(j);
+        T elemI = heap.get(i);
+        T elemJ = heap.get(j);
 
-        heap.set(i, elem_j);
-        heap.set(j, elem_i);
+        heap.set(i, elemJ);
+        heap.set(j, elemI);
     }
 
     // Removes a particular element in the heap, O(n)
@@ -166,14 +166,14 @@ public class PriorityQueue<T extends Comparable<T>> {
         if (isEmpty()) return null;
 
         int indexOfLastElem = size() - 1;
-        T removed_data = heap.get(i);
+        T removedData = heap.get(i);
         swap(i, indexOfLastElem);
 
         // Obliterate the value
         heap.remove(indexOfLastElem);
 
         // Check if the last element was removed
-        if (i == indexOfLastElem) return removed_data;
+        if (i == indexOfLastElem) return removedData;
         T elem = heap.get(i);
 
         // Try sinking element
@@ -181,7 +181,7 @@ public class PriorityQueue<T extends Comparable<T>> {
 
         // If sinking did not work try swimming
         if (heap.get(i).equals(elem)) swim(i);
-        return removed_data;
+        return removedData;
     }
 
     // Recursively checks if this heap is a min heap

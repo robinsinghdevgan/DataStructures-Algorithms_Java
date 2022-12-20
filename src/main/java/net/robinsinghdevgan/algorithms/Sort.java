@@ -1,6 +1,6 @@
 package net.robinsinghdevgan.algorithms;
 
-import net.robinsinghdevgan.dataStructures.BinarySearchTree;
+import net.robinsinghdevgan.data_structures.BinarySearchTree;
 
 import java.util.TreeMap;
 

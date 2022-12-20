@@ -1,6 +1,6 @@
 package net.robinsinghdevgan.algorithms.graphs;
 
-import net.robinsinghdevgan.dataStructures.graphs.Graph;
+import net.robinsinghdevgan.data_structures.graphs.Graph;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 

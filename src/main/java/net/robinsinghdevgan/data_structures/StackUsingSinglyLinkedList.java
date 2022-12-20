@@ -1,11 +1,11 @@
-package net.robinsinghdevgan.dataStructures;
+package net.robinsinghdevgan.data_structures;
 
 import java.util.EmptyStackException;
 
 public class StackUsingSinglyLinkedList<E> {
     private int size = 0;
     private int top = -1;
-    private SinglyLinkedList<E> list;
+    private final SinglyLinkedList<E> list;
 
     public StackUsingSinglyLinkedList() {
         list = new SinglyLinkedList<>();

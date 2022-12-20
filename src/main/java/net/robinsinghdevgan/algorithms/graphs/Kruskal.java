@@ -1,7 +1,7 @@
 package net.robinsinghdevgan.algorithms.graphs;
 
-import net.robinsinghdevgan.dataStructures.graphs.Edge;
-import net.robinsinghdevgan.dataStructures.graphs.Graph;
+import net.robinsinghdevgan.data_structures.graphs.Edge;
+import net.robinsinghdevgan.data_structures.graphs.Graph;
 
 import java.util.*;
 

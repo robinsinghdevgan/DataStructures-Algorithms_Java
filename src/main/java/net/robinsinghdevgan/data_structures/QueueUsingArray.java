@@ -1,8 +1,8 @@
-package net.robinsinghdevgan.dataStructures;
+package net.robinsinghdevgan.data_structures;
 
 public class QueueUsingArray<E> implements Queue<E> {
     private int front, rear;
-    private Object[] array;
+    private final Object[] array;
 
     public QueueUsingArray(int capacity) {
         array = new Object[capacity + 1];
