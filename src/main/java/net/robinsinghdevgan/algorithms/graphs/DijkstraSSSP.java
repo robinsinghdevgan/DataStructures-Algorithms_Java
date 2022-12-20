@@ -37,7 +37,7 @@ public class DijkstraSSSP<V extends Comparable<V>> {
         int numberOfVertices = graph.numberOfVertices();
 
         /* The priority-queue */
-        //Let 'pq' be the priority queue of total size 'V', and is of type [source, destination-cost]
+        //Let 'pq' be the priority queue of total size 'numberOfVertices', and is of type [source, destination-cost]
         var pq = new PriorityQueue<>(
                 numberOfVertices,
                 new DistanceToVertexFromSource()
