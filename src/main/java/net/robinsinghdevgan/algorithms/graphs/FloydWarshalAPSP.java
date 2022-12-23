@@ -3,24 +3,31 @@ package net.robinsinghdevgan.algorithms.graphs;
 import net.robinsinghdevgan.data_structures.graphs.Graph;
 
 import java.util.HashMap;
+import java.util.Map;
 
-public class FloydWarshalAPSP<E extends Comparable<E>> {
+public class FloydWarshalAPSP<V extends Comparable<V>> {
 
-    public HashMap<E, HashMap<E, Double>> allPairsShortestPath(Graph<E> graph) {
-        var costMatrix = new HashMap<E, HashMap<E, Double>>();
+    public Map<V, HashMap<V, Double>> allPairsShortestPath(Graph<V> graph) {
+        
         /*
          * Initialize the cost matrix
          */
+        var costMatrix = new HashMap<V, HashMap<V, Double>>();
         var listOfVertices = graph.vertices();
 
         for (var v : listOfVertices) {
+            //against every vertex 'v', add a Map object
             costMatrix.put(v.getData(), new HashMap<>());
+            //Let 'costMapOfV' be the new Map object created in the above line
             var costMapOfV = costMatrix.get(v.getData());
-            for (var w : listOfVertices)
+            //For every vertex 'w', initialize the cost to reach vertex 'w' from vertex 'v'
+            for (var w : listOfVertices) {
+                var costToReachW = graph.getCost(v.getData(), w.getData());
                 costMapOfV.put(
                         w.getData(),
-                        graph.getCost(v.getData(), w.getData())
+                        costToReachW
                 );
+            }
         }
 
         /*
@@ -42,9 +49,11 @@ public class FloydWarshalAPSP<E extends Comparable<E>> {
                     // If vertex k is on the shortest path from
                     // i to j, then update the value of dist[i][j]
                     var j = J.getData();
-                    if (
-                            costMatrix.get(i).get(k) + costMatrix.get(k).get(j) < costMatrix.get(i).get(j)
-                    ) costMatrix.get(i).put(j, costMatrix.get(i).get(k) + costMatrix.get(k).get(j));
+                    var costToTravelFromIToK = costMatrix.get(i).get(k);
+                    var costToTravelFromKToJ = costMatrix.get(k).get(j);
+                    var costToTravelFromIToJ = costMatrix.get(i).get(j);
+                    if (costToTravelFromIToK + costToTravelFromKToJ < costToTravelFromIToJ)
+                        costMatrix.get(i).put(j, costToTravelFromIToK + costToTravelFromKToJ);
                 }
             }
         }
@@ -62,9 +71,11 @@ public class FloydWarshalAPSP<E extends Comparable<E>> {
                     // If vertex k is on the shortest path from
                     // i to j, then update the value of dist[i][j]
                     var j = J.getData();
-                    if (
-                            costMatrix.get(i).get(k) + costMatrix.get(k).get(j) < costMatrix.get(i).get(j)
-                    ) costMatrix.get(i).put(j, Double.NEGATIVE_INFINITY);
+                    var costToTravelFromIToK = costMatrix.get(i).get(k);
+                    var costToTravelFromKToJ = costMatrix.get(k).get(j);
+                    var costToTravelFromIToJ = costMatrix.get(i).get(j);
+                    if (costToTravelFromIToK + costToTravelFromKToJ < costToTravelFromIToJ)
+                        costMatrix.get(i).put(j, Double.NEGATIVE_INFINITY);
                 }
             }
         }
