@@ -27,7 +27,7 @@ public class StringPatternSearch {
             for (j = 0; j < M; j++) if (txt.charAt(i + j) != pat.charAt(j)) break;
 
             if (j == M) { // if pat[0...M-1] = txt[i, i+1, ...i+M-1]
-                log.info(String.valueOf("NaiveSearch : Pattern found at index " + i));
+                log.info("NaiveSearch : Pattern found at index " + i);
                 result.add(i);
             }
         }
@@ -55,7 +55,7 @@ public class StringPatternSearch {
                 i++;
             }
             if (j == M) {
-                log.info(String.valueOf("KMP: Found pattern " + "at index " + (i - j)));
+                log.info("KMP: Found pattern " + "at index " + (i - j));
                 result.add(i - j);
                 j = lps[j - 1];
             }
@@ -103,7 +103,7 @@ public class StringPatternSearch {
     static ArrayList<Integer> searchRabinKarp(String pat, String txt) {
         ArrayList<Integer> result = new ArrayList<>();
         if (pat.length() > txt.length()) {
-            log.info(String.valueOf("pat is not a substring of txt."));
+            log.info("pat is not a substring of txt.");
         }
 
         final int BASE = 26;
@@ -120,7 +120,7 @@ public class StringPatternSearch {
             // against hash collision.
             if (tHash == sHash && txt.startsWith(pat, i - pat.length())) {
                 found = true;
-                log.info(String.valueOf("RabinKarp: Pattern found at: " + (i - pat.length()))); // Found a match.
+                log.info("RabinKarp: Pattern found at: " + (i - pat.length())); // Found a match.
                 result.add(i - pat.length());
             }
 
@@ -131,11 +131,11 @@ public class StringPatternSearch {
         // Tries to match pat and txt.substring(txt.length() - pat.length()).
         if (tHash == sHash && txt.endsWith(pat)) {
             found = true;
-            log.info(String.valueOf("RabinKarp: Pattern found at: " + (txt.length() - pat.length())));
+            log.info("RabinKarp: Pattern found at: " + (txt.length() - pat.length()));
             result.add(txt.length() - pat.length());
         }
         if (!found) {
-            log.info(String.valueOf("pat is not a substring of txt."));
+            log.info("pat is not a substring of txt.");
         }
         return result;
     }

@@ -95,7 +95,7 @@ class BellmanFordSSSPTest {
         var obj = new BellmanFordSSSP<Integer>();
         var distanceMap = obj.getShortestPath(graph1, sourceVertex);
 
-        log.info(String.valueOf("Null path with Infinite cost represents a negative Cycle."));
+        log.info("Null path with Infinite cost represents a negative Cycle.");
         for (var entry : distanceMap.entrySet()) {
             System.out.println(
                     "Shortest Path from: '" +

@@ -20,7 +20,6 @@ class SinglyLinkedListTest {
         log.info(String.valueOf(sll.toString()));
     }
 
-    @org.junit.jupiter.api.Test
     SinglyLinkedList<Integer> testCollectionToList() {
         SinglyLinkedList<Integer> sll;
         sll = new SinglyLinkedList<>();
@@ -33,7 +32,7 @@ class SinglyLinkedListTest {
     }
 
     @Test
-    public void removeItem() {
+    void removeItem() {
         SinglyLinkedList<Integer> sll;
         sll = testCollectionToList();
         sll.remove(0);
@@ -45,10 +44,10 @@ class SinglyLinkedListTest {
     }
 
     @org.junit.jupiter.api.Test
-    public void getItem() {
+    void getItem() {
         final SinglyLinkedList<Integer> sll = testCollectionToList();
         for (int i = 0; i < 8; i++) {
-            log.info(String.valueOf("i: " + i + " -> " + sll.get(i)));
+            log.info("i: " + i + " -> " + sll.get(i));
             assertEquals(i, sll.get(i));
         }
         Throwable exception = assertThrows(
@@ -59,7 +58,7 @@ class SinglyLinkedListTest {
     }
 
     @Test
-    public void checkFirstAndLast() {
+    void checkFirstAndLast() {
         SinglyLinkedList<Integer> sll = new SinglyLinkedList<>();
         sll.add(1);
         assertEquals(1, sll.getFirst());
@@ -83,7 +82,7 @@ class SinglyLinkedListTest {
     }
 
     @Test
-    public void reverse() {
+    void reverse() {
         SinglyLinkedList<Integer> sll;
         sll = testCollectionToList();
         SinglyLinkedList<Integer> newList = sll.reverse();

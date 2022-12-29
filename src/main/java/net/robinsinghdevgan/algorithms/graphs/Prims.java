@@ -57,9 +57,9 @@ public class Prims<T extends Comparable<T>> {
                 graph.removeEdge(edges.get(i));
         }
 
-        log.info(String.valueOf("MST Cost: " + mstCost));
+        log.info("MST Cost: " + mstCost);
         for (var e : mstEdges) {
-            log.info(String.valueOf("MST Edge: " + e));
+            log.info("MST Edge: " + e);
         }
         return mstCost;
     }

@@ -48,7 +48,7 @@ class DoublyLinkedListTest {
     public void getItem() {
         final DoublyLinkedList<Integer> sll = testCollectionToList();
         for (int i = 0; i < 8; i++) {
-            log.info(String.valueOf("i: " + i + " -> " + sll.get(i)));
+            log.info("i: " + i + " -> " + sll.get(i));
             assertEquals(i, sll.get(i));
         }
         Throwable exception = assertThrows(
