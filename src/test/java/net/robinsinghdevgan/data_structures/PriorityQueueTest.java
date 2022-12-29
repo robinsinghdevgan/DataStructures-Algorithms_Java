@@ -1,5 +1,6 @@
 package net.robinsinghdevgan.data_structures;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
@@ -11,7 +12,8 @@ import java.util.List;
 import static com.google.common.truth.Truth.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class PriorityQueueTest {
+@Slf4j
+class PriorityQueueTest {
     static final int LOOPS = 100;
     static final int MAX_SZ = 100;
 
@@ -37,7 +39,7 @@ public class PriorityQueueTest {
     }
 
     @Test
-    public void testEmpty() {
+    void testEmpty() {
         PriorityQueue<Integer> q = new PriorityQueue<>();
         assertThat(q.size()).isEqualTo(0);
         assertThat(q.isEmpty()).isTrue();
@@ -46,7 +48,7 @@ public class PriorityQueueTest {
     }
 
     @Test
-    public void testHeapProperty() {
+    void testHeapProperty() {
         PriorityQueue<Integer> q = new PriorityQueue<>();
         Integer[] nums = {3, 2, 5, 6, 7, 9, 4, 8, 1};
 
@@ -62,7 +64,7 @@ public class PriorityQueueTest {
     }
 
     @Test
-    public void testHeapify() {
+    void testHeapify() {
         for (int i = 1; i < LOOPS; i++) {
             Integer[] lst = genRandArray(i);
             PriorityQueue<Integer> pq = new PriorityQueue<>(lst);
@@ -78,7 +80,7 @@ public class PriorityQueueTest {
     }
 
     @Test
-    public void testClear() {
+    void testClear() {
         PriorityQueue<String> q;
         String[] strs = {"aa", "bb", "cc", "dd", "ee"};
         q = new PriorityQueue<>(strs);
@@ -88,7 +90,7 @@ public class PriorityQueueTest {
     }
 
     @Test
-    public void testContainment() {
+    void testContainment() {
         String[] strs = {"aa", "bb", "cc", "dd", "ee"};
         PriorityQueue<String> q = new PriorityQueue<>(strs);
         q.remove("aa");
@@ -104,7 +106,7 @@ public class PriorityQueueTest {
     }
 
     @Test
-    public void testContainmentRandomized() {
+    void testContainmentRandomized() {
         for (int i = 0; i < LOOPS; i++) {
             List<Integer> randNums = genRandList(100);
             java.util.PriorityQueue<Integer> PQ = new java.util.PriorityQueue<>();
@@ -143,7 +145,7 @@ public class PriorityQueueTest {
     }
 
     @Test
-    public void testRemoving() {
+    void testRemoving() {
         Integer[] in = {1, 2, 3, 4, 5, 6, 7};
         Integer[] removeOrder = {1, 3, 6, 4, 5, 7, 2};
         sequentialRemoving(in, removeOrder);
@@ -166,7 +168,7 @@ public class PriorityQueueTest {
     }
 
     @Test
-    public void testRemovingDuplicates() {
+    void testRemovingDuplicates() {
         Integer[] in = new Integer[]{2, 7, 2, 11, 7, 13, 2};
         PriorityQueue<Integer> pq = new PriorityQueue<>(in);
 
@@ -184,7 +186,7 @@ public class PriorityQueueTest {
     }
 
     @Test
-    public void testRandomizedPolling() {
+    void testRandomizedPolling() {
         for (int i = 0; i < LOOPS; i++) {
             List<Integer> randNums = genRandList(i);
             java.util.PriorityQueue<Integer> pq1 = new java.util.PriorityQueue<>();
@@ -214,7 +216,7 @@ public class PriorityQueueTest {
     }
 
     @Test
-    public void testRandomizedRemoving() {
+    void testRandomizedRemoving() {
         for (int i = 0; i < LOOPS; i++) {
             List<Integer> randNums = genRandList(i);
             java.util.PriorityQueue<Integer> pq1 = new java.util.PriorityQueue<>();
@@ -245,7 +247,7 @@ public class PriorityQueueTest {
     }
 
     @Test
-    public void testPQReusability() {
+    void testPQReusability() {
         List<Integer> SZs = genUniqueRandList();
 
         java.util.PriorityQueue<Integer> PQ = new java.util.PriorityQueue<>();

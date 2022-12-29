@@ -1,5 +1,6 @@
 package net.robinsinghdevgan.algorithms.graphs;
 
+import lombok.extern.slf4j.Slf4j;
 import net.robinsinghdevgan.data_structures.graphs.Graph;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -7,7 +8,8 @@ import org.junit.jupiter.api.TestInstance;
 import static com.google.common.truth.Truth.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class FloydWarshalAPSPTest {
+@Slf4j
+class FloydWarshalAPSPTest {
 
     private Graph<Integer> createGraphWithOnlyPositiveEdgeCosts() {
         var graph = new Graph<Integer>();
@@ -50,7 +52,7 @@ public class FloydWarshalAPSPTest {
     }
 
     @Test
-    public void test1() {
+    void test1() {
         var obj = new FloydWarshalAPSP<Integer>();
         var graph = createGraphWithOnlyPositiveEdgeCosts();
         var res = obj.allPairsShortestPath(graph);

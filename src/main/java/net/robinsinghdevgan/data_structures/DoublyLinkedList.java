@@ -1,7 +1,10 @@
 package net.robinsinghdevgan.data_structures;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.*;
 
+@Slf4j
 public class DoublyLinkedList<E> implements List<E> {
 
     private Node<E> first = null, last = null;

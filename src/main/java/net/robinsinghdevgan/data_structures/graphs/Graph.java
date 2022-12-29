@@ -1,10 +1,13 @@
 package net.robinsinghdevgan.data_structures.graphs;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+@Slf4j
 public class Graph<E extends Comparable<E>> {
     private final HashMap<E, Vertex<E>> vertices;
     private final List<Edge<E>> edges;
@@ -40,7 +43,7 @@ public class Graph<E extends Comparable<E>> {
         vertices.remove(value);
     }
 
-    public void removeEdgesTo(E value) throws IllegalArgumentException {
+    void removeEdgesTo(E value) throws IllegalArgumentException {
         if (vertices.containsKey(value)) {
             for (var entry : vertices.entrySet()) {
                 var inEdges = entry.getValue().getInDegreeEdges();

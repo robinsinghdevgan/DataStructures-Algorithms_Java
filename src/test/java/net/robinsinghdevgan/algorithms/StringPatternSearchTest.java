@@ -1,5 +1,6 @@
 package net.robinsinghdevgan.algorithms;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
@@ -9,10 +10,11 @@ import java.util.List;
 import static com.google.common.truth.Truth.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class StringPatternSearchTest {
+@Slf4j
+class StringPatternSearchTest {
 
     @Test
-    public void test1() {
+    void test1() {
         String txt = "ABABDABACDABABCABABABABDABACDABABCABABCABABABABDABA";
         String pat = "ABABCABAB";
         final List<Integer> result = Arrays.asList(10, 29, 34);

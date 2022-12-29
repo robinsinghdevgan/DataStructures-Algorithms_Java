@@ -1,5 +1,6 @@
 package net.robinsinghdevgan.data_structures;
 
+import lombok.extern.slf4j.Slf4j;
 import net.robinsinghdevgan.data_structures.graphs.Graph;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -7,7 +8,8 @@ import org.junit.jupiter.api.TestInstance;
 import static com.google.common.truth.Truth.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class GraphTest {
+@Slf4j
+class GraphTest {
 
     private Graph<Integer> createGraph() {
         var graph = new Graph<Integer>();
@@ -32,12 +34,12 @@ public class GraphTest {
     }
 
     @Test
-    public void test1() {
+    void test1() {
         var graph1 = createGraph();
-        System.out.println(graph1);
+        log.info(String.valueOf(graph1));
         assertThat(graph1.numberOfVertices()).isEqualTo(9);
         graph1.removeVertex(8);
-        System.out.println(graph1);
+        log.info(String.valueOf(graph1));
         assertThat(graph1.numberOfVertices()).isEqualTo(8);
     }
 }

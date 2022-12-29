@@ -1,5 +1,6 @@
 package net.robinsinghdevgan.data_structures;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class QueueTest {
+@Slf4j
+class QueueTest {
     private final List<Queue<Integer>> queues = new ArrayList<>();
 
     @BeforeAll
@@ -21,7 +23,7 @@ public class QueueTest {
     }
 
     @Test
-    public void testEmptyQueue() {
+    void testEmptyQueue() {
         for (var queue : queues) {
             assertTrue(queue.isEmpty());
             assertEquals(0, queue.size());
@@ -29,7 +31,7 @@ public class QueueTest {
     }
 
     @Test
-    public void testExhaustively() {
+    void testExhaustively() {
         for (Queue<Integer> queue : queues) {
             assertTrue(queue.isEmpty());
             queue.offer(1);
@@ -49,7 +51,7 @@ public class QueueTest {
     }
 
     @Test
-    public void testOffer() {
+    void testOffer() {
         for (Queue<Integer> queue : queues) {
             queue.offer(2);
             assertEquals(1, queue.size());
@@ -58,7 +60,7 @@ public class QueueTest {
     }
 
     @Test
-    public void testPeek() {
+    void testPeek() {
         for (Queue<Integer> queue : queues) {
             queue.offer(2);
             assertEquals(2, (int) queue.peek());
@@ -68,7 +70,7 @@ public class QueueTest {
     }
 
     @Test
-    public void testPeekOnEmpty() {
+    void testPeekOnEmpty() {
         Assertions.assertThrows(
                 Exception.class,
                 () -> {
@@ -80,7 +82,7 @@ public class QueueTest {
     }
 
     @Test
-    public void testPoll() {
+    void testPoll() {
         for (Queue<Integer> queue : queues) {
             queue.offer(2);
             assertEquals(2, (int) queue.poll());
@@ -89,7 +91,7 @@ public class QueueTest {
     }
 
     @Test
-    public void testPollOnEmpty() {
+    void testPollOnEmpty() {
         Assertions.assertThrows(
                 Exception.class,
                 () -> {

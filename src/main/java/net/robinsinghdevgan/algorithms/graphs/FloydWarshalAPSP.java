@@ -1,10 +1,12 @@
 package net.robinsinghdevgan.algorithms.graphs;
 
+import lombok.extern.slf4j.Slf4j;
 import net.robinsinghdevgan.data_structures.graphs.Graph;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 public class FloydWarshalAPSP<V extends Comparable<V>> {
 
     public Map<V, HashMap<V, Double>> allPairsShortestPath(Graph<V> graph) {
@@ -93,7 +95,7 @@ public class FloydWarshalAPSP<V extends Comparable<V>> {
             }
             sb.append("\n");
         }
-        System.out.println(sb);
+        log.info(String.valueOf(sb));
         return costMatrix;
     }
 }

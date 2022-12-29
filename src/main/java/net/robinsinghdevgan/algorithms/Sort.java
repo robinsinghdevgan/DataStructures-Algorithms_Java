@@ -1,9 +1,11 @@
 package net.robinsinghdevgan.algorithms;
 
+import lombok.extern.slf4j.Slf4j;
 import net.robinsinghdevgan.data_structures.BinarySearchTree;
 
 import java.util.TreeMap;
 
+@Slf4j
 public class Sort {
 
     private static void swap(int[] arr, int i, int j) {

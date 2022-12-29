@@ -1,10 +1,12 @@
 package net.robinsinghdevgan.algorithms.graphs;
 
+import lombok.extern.slf4j.Slf4j;
 import net.robinsinghdevgan.data_structures.graphs.Graph;
 import net.robinsinghdevgan.data_structures.StackUsingSinglyLinkedList;
 
 import java.util.HashSet;
 
+@Slf4j
 public class DFS<E extends Comparable<E>> {
 
     // returns cost to search target from source
@@ -23,7 +25,7 @@ public class DFS<E extends Comparable<E>> {
         StringBuilder sb = new StringBuilder();
         sb.append("Path: ");
         while (!stackVertex.isEmpty()) {
-            System.out.println(stackVertex);
+            log.info(String.valueOf(stackVertex));
 
             cost += stackCost.pop();
 
@@ -44,7 +46,7 @@ public class DFS<E extends Comparable<E>> {
                 stackVertex.push(e.getTo());
             }
         }
-        System.out.println(sb);
+        log.info(String.valueOf(sb));
         return found ? cost : Double.NEGATIVE_INFINITY;
     }
 }

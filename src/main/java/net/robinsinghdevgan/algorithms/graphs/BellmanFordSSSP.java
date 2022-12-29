@@ -1,11 +1,13 @@
 package net.robinsinghdevgan.algorithms.graphs;
 
+import lombok.extern.slf4j.Slf4j;
 import net.robinsinghdevgan.data_structures.graphs.Edge;
 import net.robinsinghdevgan.data_structures.graphs.Graph;
 import net.robinsinghdevgan.data_structures.graphs.Vertex;
 
 import java.util.*;
 
+@Slf4j
 public class BellmanFordSSSP<V extends Comparable<V>> {
 
     private List<String> reconstructPath(

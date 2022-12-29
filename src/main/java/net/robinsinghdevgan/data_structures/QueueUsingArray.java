@@ -1,5 +1,8 @@
 package net.robinsinghdevgan.data_structures;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class QueueUsingArray<E> implements Queue<E> {
     private int front, rear;
     private final Object[] array;

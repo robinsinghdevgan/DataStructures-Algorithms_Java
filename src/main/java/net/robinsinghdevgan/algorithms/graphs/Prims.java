@@ -1,5 +1,6 @@
 package net.robinsinghdevgan.algorithms.graphs;
 
+import lombok.extern.slf4j.Slf4j;
 import net.robinsinghdevgan.data_structures.graphs.Edge;
 import net.robinsinghdevgan.data_structures.graphs.Graph;
 
@@ -7,6 +8,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 
+@Slf4j
 public class Prims<T extends Comparable<T>> {
 
     PriorityQueue<Edge<T>> pq;
@@ -55,9 +57,9 @@ public class Prims<T extends Comparable<T>> {
                 graph.removeEdge(edges.get(i));
         }
 
-        System.out.println("MST Cost: " + mstCost);
+        log.info(String.valueOf("MST Cost: " + mstCost));
         for (var e : mstEdges) {
-            System.out.println("MST Edge: " + e);
+            log.info(String.valueOf("MST Edge: " + e));
         }
         return mstCost;
     }

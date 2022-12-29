@@ -1,5 +1,6 @@
 package net.robinsinghdevgan.algorithms.graphs;
 
+import lombok.extern.slf4j.Slf4j;
 import net.robinsinghdevgan.data_structures.graphs.Graph;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -9,6 +10,7 @@ import java.util.HashMap;
 import static com.google.common.truth.Truth.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@Slf4j
 class DijkstraSSSPTest {
 
     private Graph<Integer> createGraph() {
@@ -36,7 +38,7 @@ class DijkstraSSSPTest {
     @Test
     void test1() {
         var graph1 = createGraph();
-        System.out.println(graph1);
+        log.info(String.valueOf(graph1));
 
         var checkMap = new HashMap<Integer, String>();
         checkMap.put(0, "[] and Costs: 0.0");

@@ -1,5 +1,6 @@
 package net.robinsinghdevgan.data_structures;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
@@ -8,14 +9,15 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@Slf4j
 class DoublyLinkedListTest {
     final int[] arr = new int[]{0, 1, 2, 3, 4, 5, 6, 7};
 
     @Test
-    public void testToString() {
+    void testToString() {
         DoublyLinkedList<Integer> sll;
         sll = testCollectionToList();
-        System.out.println(sll.toString());
+        log.info(String.valueOf(sll.toString()));
     }
 
     @org.junit.jupiter.api.Test
@@ -46,13 +48,13 @@ class DoublyLinkedListTest {
     public void getItem() {
         final DoublyLinkedList<Integer> sll = testCollectionToList();
         for (int i = 0; i < 8; i++) {
-            System.out.println("i: " + i + " -> " + sll.get(i));
+            log.info(String.valueOf("i: " + i + " -> " + sll.get(i)));
             assertEquals(i, sll.get(i));
         }
         Throwable exception = assertThrows(
                 IndexOutOfBoundsException.class,
                 () -> sll.get(100)
         );
-        System.out.println(exception.getMessage());
+        log.info(String.valueOf(exception.getMessage()));
     }
 }

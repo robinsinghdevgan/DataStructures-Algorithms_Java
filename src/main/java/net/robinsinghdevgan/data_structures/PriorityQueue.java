@@ -1,11 +1,14 @@
 //Reference: https://github.com/williamfiset/Algorithms/blob/master/src/main/java/com/williamfiset/algorithms/datastructures/priorityqueue/BinaryHeap.java
 package net.robinsinghdevgan.data_structures;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 public class PriorityQueue<T extends Comparable<T>> {
     // A dynamic list to track the elements inside the heap
     private final List<T> heap;

@@ -1,5 +1,8 @@
 package net.robinsinghdevgan.algorithms;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class Searching {
 
     public static int linearSearch(int[] arr, int key) {

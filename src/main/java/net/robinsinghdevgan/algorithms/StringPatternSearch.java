@@ -1,5 +1,7 @@
 package net.robinsinghdevgan.algorithms;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
 
 /*
@@ -7,6 +9,7 @@ References:
 [1] https://github.com/adnanaziz/EPIJudge/blob/master/epi_judge_java_solutions/epi/SubstringMatch.java
 [2] https://www.geeksforgeeks.org/algorithms-gq/pattern-searching/
 */
+@Slf4j
 public class StringPatternSearch {
 
     public static ArrayList<Integer> naiveSearch(String pat, String txt) {
@@ -24,7 +27,7 @@ public class StringPatternSearch {
             for (j = 0; j < M; j++) if (txt.charAt(i + j) != pat.charAt(j)) break;
 
             if (j == M) { // if pat[0...M-1] = txt[i, i+1, ...i+M-1]
-                System.out.println("NaiveSearch : Pattern found at index " + i);
+                log.info(String.valueOf("NaiveSearch : Pattern found at index " + i));
                 result.add(i);
             }
         }
@@ -52,7 +55,7 @@ public class StringPatternSearch {
                 i++;
             }
             if (j == M) {
-                System.out.println("KMP: Found pattern " + "at index " + (i - j));
+                log.info(String.valueOf("KMP: Found pattern " + "at index " + (i - j)));
                 result.add(i - j);
                 j = lps[j - 1];
             }
@@ -100,7 +103,7 @@ public class StringPatternSearch {
     static ArrayList<Integer> searchRabinKarp(String pat, String txt) {
         ArrayList<Integer> result = new ArrayList<>();
         if (pat.length() > txt.length()) {
-            System.out.println("pat is not a substring of txt.");
+            log.info(String.valueOf("pat is not a substring of txt."));
         }
 
         final int BASE = 26;
@@ -117,7 +120,7 @@ public class StringPatternSearch {
             // against hash collision.
             if (tHash == sHash && txt.startsWith(pat, i - pat.length())) {
                 found = true;
-                System.out.println("RabinKarp: Pattern found at: " + (i - pat.length())); // Found a match.
+                log.info(String.valueOf("RabinKarp: Pattern found at: " + (i - pat.length()))); // Found a match.
                 result.add(i - pat.length());
             }
 
@@ -128,11 +131,11 @@ public class StringPatternSearch {
         // Tries to match pat and txt.substring(txt.length() - pat.length()).
         if (tHash == sHash && txt.endsWith(pat)) {
             found = true;
-            System.out.println("RabinKarp: Pattern found at: " + (txt.length() - pat.length()));
+            log.info(String.valueOf("RabinKarp: Pattern found at: " + (txt.length() - pat.length())));
             result.add(txt.length() - pat.length());
         }
         if (!found) {
-            System.out.println("pat is not a substring of txt.");
+            log.info(String.valueOf("pat is not a substring of txt."));
         }
         return result;
     }

@@ -1,5 +1,6 @@
 package net.robinsinghdevgan.algorithms.graphs;
 
+import lombok.extern.slf4j.Slf4j;
 import net.robinsinghdevgan.data_structures.graphs.Graph;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -7,7 +8,8 @@ import org.junit.jupiter.api.TestInstance;
 import static com.google.common.truth.Truth.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class KruskalTest {
+@Slf4j
+class KruskalTest {
 
     private Graph<Integer> createGraph() {
         var graph = new Graph<Integer>();
@@ -46,14 +48,14 @@ public class KruskalTest {
     }
 
     @Test
-    public void test1() {
+    void test1() {
         var graph1 = createGraph();
-        System.out.println(graph1);
+        log.info(String.valueOf(graph1));
 
         var obj = new Kruskal<Integer>();
         assertThat(obj.getMSP(graph1)).isEqualTo(20.0);
 
-        System.out.println(graph1);
+        log.info(String.valueOf(graph1));
     }
 
     private void addUndirectedEdge(Graph<Integer> g, int from, int to, Double cost) {
@@ -62,7 +64,7 @@ public class KruskalTest {
     }
 
     @Test
-    public void test2() {
+    void test2() {
         var g = new Graph<Integer>();
         for (int i = 0; i < 10; i++) {
             g.addVertex(i);
@@ -85,11 +87,11 @@ public class KruskalTest {
         addUndirectedEdge(g, 6, 7, 1.0);
         addUndirectedEdge(g, 3, 7, 2.0);
         addUndirectedEdge(g, 7, 8, 6.0);
-        System.out.println(g);
+        log.info(String.valueOf(g));
 
         var obj = new Kruskal<Integer>();
         assertThat(obj.getMSP(g)).isEqualTo(14.0);
 
-        System.out.println(g);
+        log.info(String.valueOf(g));
     }
 }

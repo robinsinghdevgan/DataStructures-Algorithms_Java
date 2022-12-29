@@ -1,5 +1,6 @@
 package net.robinsinghdevgan.algorithms.graphs;
 
+import lombok.extern.slf4j.Slf4j;
 import net.robinsinghdevgan.data_structures.graphs.Graph;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -9,7 +10,8 @@ import java.util.HashMap;
 import static com.google.common.truth.Truth.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class BellmanFordSSSPTest {
+@Slf4j
+class BellmanFordSSSPTest {
 
     private Graph<Integer> createGraphWithOnlyPositiveEdgeCosts() {
         var graph = new Graph<Integer>();
@@ -52,9 +54,9 @@ public class BellmanFordSSSPTest {
     }
 
     @Test
-    public void testGraphWithOnlyPositiveEdgeCosts() {
+    void testGraphWithOnlyPositiveEdgeCosts() {
         var graph1 = createGraphWithOnlyPositiveEdgeCosts();
-        System.out.println(graph1);
+        log.info(String.valueOf(graph1));
 
         var checkMap = new HashMap<Integer, String>();
         checkMap.put(0, "[] and Costs: 0.0");
@@ -85,15 +87,15 @@ public class BellmanFordSSSPTest {
     }
 
     @Test
-    public void testGraphWithOnlyNegativeEdgeCosts() {
+    void testGraphWithOnlyNegativeEdgeCosts() {
         var graph1 = createGraphWithNegativeEdgeCosts();
-        System.out.println(graph1);
+        log.info(String.valueOf(graph1));
 
         Integer sourceVertex = 0;
         var obj = new BellmanFordSSSP<Integer>();
         var distanceMap = obj.getShortestPath(graph1, sourceVertex);
 
-        System.out.println("Null path with Infinite cost represents a negative Cycle.");
+        log.info(String.valueOf("Null path with Infinite cost represents a negative Cycle."));
         for (var entry : distanceMap.entrySet()) {
             System.out.println(
                     "Shortest Path from: '" +

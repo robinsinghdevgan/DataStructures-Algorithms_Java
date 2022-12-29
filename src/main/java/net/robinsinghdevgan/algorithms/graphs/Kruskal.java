@@ -1,10 +1,12 @@
 package net.robinsinghdevgan.algorithms.graphs;
 
+import lombok.extern.slf4j.Slf4j;
 import net.robinsinghdevgan.data_structures.graphs.Edge;
 import net.robinsinghdevgan.data_structures.graphs.Graph;
 
 import java.util.*;
 
+@Slf4j
 public class Kruskal<T extends Comparable<T>> {
 
     HashMap<T, Integer> indexMap;
@@ -24,9 +26,9 @@ public class Kruskal<T extends Comparable<T>> {
             if (!mstEdges.contains(edges.get(i))) graph.removeEdge(edges.get(i));
         }
 
-        System.out.println("MST Cost: " + mstCost);
+        log.info(String.valueOf("MST Cost: " + mstCost));
         for (var e : mstEdges) {
-            System.out.println("MST Edge: " + e);
+            log.info(String.valueOf("MST Edge: " + e));
         }
 
         return mstCost;

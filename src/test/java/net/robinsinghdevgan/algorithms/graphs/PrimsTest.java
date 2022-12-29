@@ -1,5 +1,6 @@
 package net.robinsinghdevgan.algorithms.graphs;
 
+import lombok.extern.slf4j.Slf4j;
 import net.robinsinghdevgan.data_structures.graphs.Graph;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -7,7 +8,8 @@ import org.junit.jupiter.api.TestInstance;
 import static com.google.common.truth.Truth.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class PrimsTest {
+@Slf4j
+class PrimsTest {
 
     private Graph<Integer> createGraph() {
         var graph = new Graph<Integer>();
@@ -46,15 +48,15 @@ public class PrimsTest {
     }
 
     @Test
-    public void test1() {
+    void test1() {
         var graph1 = createGraph();
-        System.out.println(graph1);
+        log.info(String.valueOf(graph1));
 
         Integer sourceVertex = 0;
         var obj = new Prims<Integer>();
         assertThat(obj.getMSP(graph1, sourceVertex)).isEqualTo(20.0);
 
-        System.out.println(graph1);
+        log.info(String.valueOf(graph1));
     }
 
     private void addUndirectedEdge(Graph<Integer> g, int from, int to, Double cost) {
@@ -63,7 +65,7 @@ public class PrimsTest {
     }
 
     @Test
-    public void test2() {
+    void test2() {
         var g = new Graph<Integer>();
         for (int i = 0; i < 10; i++) {
             g.addVertex(i);
@@ -86,12 +88,12 @@ public class PrimsTest {
         addUndirectedEdge(g, 6, 7, 1.0);
         addUndirectedEdge(g, 3, 7, 2.0);
         addUndirectedEdge(g, 7, 8, 6.0);
-        System.out.println(g);
+        log.info(String.valueOf(g));
 
         Integer sourceVertex = 0;
         var obj = new Prims<Integer>();
         assertThat(obj.getMSP(g, sourceVertex)).isEqualTo(14.0);
 
-        System.out.println(g);
+        log.info(String.valueOf(g));
     }
 }

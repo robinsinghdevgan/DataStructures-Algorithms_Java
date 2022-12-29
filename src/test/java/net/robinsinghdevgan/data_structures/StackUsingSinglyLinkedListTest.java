@@ -1,5 +1,6 @@
 package net.robinsinghdevgan.data_structures;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -10,7 +11,8 @@ import java.util.EmptyStackException;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class StackUsingSinglyLinkedListTest {
+@Slf4j
+class StackUsingSinglyLinkedListTest {
     private StackUsingSinglyLinkedList<String> s;
 
     @BeforeAll
@@ -19,7 +21,7 @@ public class StackUsingSinglyLinkedListTest {
     }
 
     @Test
-    public void test1() {
+    void test1() {
         assertTrue(s.isEmpty());
         assertEquals(0, s.getSize());
         s.push("a");
@@ -31,7 +33,7 @@ public class StackUsingSinglyLinkedListTest {
 
     @Test
     //@Disabled
-    public void test2() {
+    void test2() {
         //s = new StackUsingSinglyLinkedList<String>();
         assertTrue(s.isEmpty());
         String[] x = {"a", "b", "c", "d"};
@@ -48,7 +50,7 @@ public class StackUsingSinglyLinkedListTest {
     }
 
     @Test
-    public void test3() {
+    void test3() {
         Assertions.assertThrows(
                 EmptyStackException.class,
                 () -> s.pop()

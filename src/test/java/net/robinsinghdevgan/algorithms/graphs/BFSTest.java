@@ -1,14 +1,20 @@
 package net.robinsinghdevgan.algorithms.graphs;
 
+import lombok.extern.slf4j.Slf4j;
 import net.robinsinghdevgan.data_structures.graphs.Graph;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
+
 import static com.google.common.truth.Truth.assertThat;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class BFSTest {
-
+//@Slf4j
+@TestInstance(TestInstance.Lifecycle.PER_CLASS) 
+@Slf4j
+class BFSTest {
+    //private static final Logger log = LogManager.getLogger("BFSTest");
     private Graph<Integer> createGraph() {
         var graph = new Graph<Integer>();
         for (int i = 0; i < 9; i++) {
@@ -32,24 +38,24 @@ public class BFSTest {
     }
 
     @Test
-    public void test1() {
+    void test1() {
         var graph = createGraph();
-        System.out.println(graph);
+        log.info(String.valueOf(graph));
         var obj = new BFS<Integer>();
         var cost = obj.search(graph, 0, 8);
         assertThat(cost).isEqualTo(28.0);
-        System.out.println(cost);
+        log.info(String.valueOf(cost));
 
         cost = obj.search(graph, 0, 6);
         assertThat(cost).isEqualTo(53.0);
-        System.out.println(cost);
+        log.info(String.valueOf(cost));
 
         cost = obj.search(graph, 0, 7);
         assertThat(cost).isEqualTo(12.0);
-        System.out.println(cost);
+        log.info(String.valueOf(cost));
 
         cost = obj.search(graph, 0, 3);
         assertThat(cost).isEqualTo(35.0);
-        System.out.println(cost);
+        log.info(String.valueOf(cost));
     }
 }

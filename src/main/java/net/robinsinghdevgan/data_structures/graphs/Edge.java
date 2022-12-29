@@ -1,5 +1,8 @@
 package net.robinsinghdevgan.data_structures.graphs;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class Edge<Vertex extends Comparable<Vertex>> {
     Vertex from, to;
     Double cost;
