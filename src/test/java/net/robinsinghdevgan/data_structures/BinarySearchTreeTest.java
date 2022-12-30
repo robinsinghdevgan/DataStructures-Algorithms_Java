@@ -33,6 +33,8 @@ class BinarySearchTreeTest {
             tree.add(j);
         }
         assertEquals("{-10055,1,2,3,5,6,88,9999}", tree.inOrderTraversal());
+        assertEquals(-10055, tree.findMin());
+        assertEquals(9999, tree.findMax());
         assertTrue(tree.remove(9999));
         assertEquals("{-10055,1,2,3,5,6,88}", tree.inOrderTraversal());
         assertTrue(tree.remove(-10055));

@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @SuppressWarnings("unused")
 @Slf4j
@@ -15,27 +16,34 @@ public class BinarySearchTree<E extends Comparable<E>> {
     public boolean add(E data) {
         var newNode = new Node(data);
         ++nodeCount;
+        //Is the tree empty?
         if (root == null) {
+            //point root to newNode
             root = newNode;
             return true;
-        } else {
-            var iter = root;
-            while (iter != null) {
-                int compare = iter.data.compareTo(data);
-                if (compare > 0) {
-                    if (iter.left == null) {
-                        iter.left = newNode;
-                        return true;
-                    }
-                    // go left
-                    iter = iter.left;
-                } else {
-                    if (iter.right == null) {
-                        iter.right = newNode;
-                        return true;
-                    }
-                    iter = iter.right;
+        }
+        //Tree is not empty
+        var iter = root;
+        while (iter != null) {
+            int compare = iter.data.compareTo(data);
+            if (compare > 0) {
+                //is the left of this node empty?
+                if (iter.left == null) {
+                    //Add newNode to the left child of this node
+                    iter.left = newNode;
+                    return true;
                 }
+                // go further left
+                iter = iter.left;
+            } else {
+                //is the right of this node empty?
+                if (iter.right == null) {
+                    //Add newNode to the right child of this node
+                    iter.right = newNode;
+                    return true;
+                }
+                // go further right
+                iter = iter.right;
             }
         }
         --nodeCount;
@@ -71,11 +79,29 @@ public class BinarySearchTree<E extends Comparable<E>> {
         return node;
     }
 
+    public E findMax() {
+        if(isEmpty())
+            throw new IllegalStateException("Tree is empty.");
+        Node n = findMax(root);
+        if(n == null)
+            return null;
+        return n.data;
+    }
+
     // Helper method to find the leftmost node (which has the smallest value)
     private Node findMin(Node node) {
         if (node == null) return null;
         while (node.left != null) node = node.left;
         return node;
+    }
+
+    public E findMin() {
+        if(isEmpty())
+            throw new IllegalStateException("Tree is empty.");
+        Node n = findMin(root);
+        if(n == null)
+            return null;
+        return n.data;
     }
 
     // Computes the height of the tree, O(n)
@@ -154,6 +180,8 @@ public class BinarySearchTree<E extends Comparable<E>> {
                 return node.left;
             } else {
                 var maxNodeInLeftSubTree = findMax(node.left); // max in left tree is going to be the new root
+                if(Objects.isNull(maxNodeInLeftSubTree))
+                    throw new IllegalStateException("Unable to find max node in tree.");
                 node.data = maxNodeInLeftSubTree.data;
                 node.left = remove(node.left, elem);
             }
@@ -214,7 +242,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
         Node node = nodes.get(mid);
 
         /*
-         * Using index in Inorder traversal, construct left and right subtress
+         * Using index in Inorder traversal, construct left and right subtrees
          */
         node.left = buildTreeUtil(nodes, start, mid - 1);
         node.right = buildTreeUtil(nodes, mid + 1, end);
@@ -229,7 +257,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
         List<Node> nodes = new ArrayList<>();
         storeBSTNodes(root, nodes);
 
-        // Constucts BST from nodes[]
+        // Constructs BST from nodes[]
         int n = nodes.size();
         return buildTreeUtil(nodes, 0, n - 1);
     }
@@ -239,7 +267,8 @@ public class BinarySearchTree<E extends Comparable<E>> {
     }
 
     private class Node {
-        Node left, right;
+        Node left;
+        Node right;
         E data;
 
         protected Node(E data) {
